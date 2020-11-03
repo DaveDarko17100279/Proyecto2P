@@ -6,6 +6,7 @@
 package proyecto2p;
 
 import BD.conexion;
+import Views.index;
 import java.sql.Connection;
 
 /** Hola amikos de yutudwdaawdwada w 
@@ -24,6 +25,7 @@ public class Proyecto2P {
         System.out.println("Hola, buenos días");
         System.out.print("Hola, buenos días");
         System.out.print("Hola, buenos días Soy Rangel");
+         new index().setVisible(true);
         //Hola Mundo da
     }
     
