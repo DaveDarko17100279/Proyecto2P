@@ -41,16 +41,18 @@ public class index extends JFrame {
         
         Botones.setLayout(null);
         Botones.setBounds(300, 220, 400, 300);
-        Botones.setBackground(new java.awt.Color(233, 196, 106));
+        //Botones.setBackground(new java.awt.Color(233, 196, 106));
         
         
         login.setBounds(50, 70, 300, 45);
         login.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
         login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        login.setBackground(new java.awt.Color(233, 196, 106));
         
         registro.setBounds(50, 185, 300, 45);
         registro.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
         registro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        registro.setBackground(new java.awt.Color(233, 196, 106));
         
         Botones.add(login);
         Botones.add(registro);
@@ -72,13 +74,15 @@ public class index extends JFrame {
         }
     }
     public void transparenciaButton() {
-        login.setOpaque(false);
+        /*login.setOpaque(false);
         login.setContentAreaFilled(false);
         login.setBorderPainted(true);
         
         registro.setOpaque(false);
         registro.setContentAreaFilled(false);
-        registro.setBorderPainted(true);
+        registro.setBorderPainted(true);*/
+        
+        Botones.setOpaque(false);
         
     }
 }
