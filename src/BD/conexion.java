@@ -14,22 +14,25 @@ import java.sql.SQLException;
  * @author aldor
  */ 
 public class conexion {
-     private static Connection con;
+     private static Connection con = null;
     private static final String driver ="com.mysql.jdbc.Driver";
     private static final String user = "root";
     private static final String password = "";
-    private static final String url= "jdbc:mysql://localhost:3306/conferencia";
+    private static final String url= "jdbc:mysql://localhost/conferencia";
 
     public conexion() {
-        con = null;
         try{
             Class.forName(driver);
             con = DriverManager.getConnection(url,user,password);
             if(con != null){
                 System.out.println("Conexion exitosa");
             }
-        }catch (ClassNotFoundException | SQLException e){
-            System.out.println("Conexion fallida");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Error al cargar el Driver");
+        }
+        catch (SQLException ex) {
+            System.out.println("Error de conexión DB");
         }
     }
     
