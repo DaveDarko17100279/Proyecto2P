@@ -10,8 +10,11 @@ public class usuarioGeneral {
     private String Correo;
     private long telefono;
     private String Contraseña;
-
-    public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña) {
+    private int Tipo;
+    public usuarioGeneral() {
+    }
+    
+    public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
         this.Nombre = Nombre;
         this.ApellidoPaterno = ApellidoPaterno;
         this.ApellidoMaterno = ApellidoMaterno;
@@ -19,8 +22,13 @@ public class usuarioGeneral {
         this.Correo = Correo;
         this.telefono = telefono;
         this.Contraseña = Contraseña;
+        this.Tipo = Tipo;
     }
 
+    public int getTipo() {
+        return Tipo;
+    }
+    
     public String getNombre() {
         return Nombre;
     }
@@ -75,6 +83,10 @@ public class usuarioGeneral {
 
     public void setContraseña(String Contraseña) {
         this.Contraseña = Contraseña;
+    }
+
+    public void setTipo(int Tipo) {
+        this.Tipo = Tipo;
     }
     
     

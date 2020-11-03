@@ -13,6 +13,9 @@ public class conferencia {
     private Time HoraFinalizacion;
     private long CodigoParticipante;
 
+    public conferencia() {
+    }
+    
     public conferencia(int idUsuario, String NombreConferencia, int CupoTotal, int Precio, boolean Costo, Date FechaPresentacion, Time HoraInicial, Time HoraFinalizacion) {
         this.idUsuario = idUsuario;
         this.NombreConferencia = NombreConferencia;
