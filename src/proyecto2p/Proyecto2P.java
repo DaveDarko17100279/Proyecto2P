@@ -22,6 +22,7 @@ public class Proyecto2P {
         // TODO code application logic here
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
+        System.out.println("Login");
         System.out.println("Hola, buenos días");
         System.out.print("Hola, buenos días");
         System.out.print("Hola, buenos días Soy Rangel");
