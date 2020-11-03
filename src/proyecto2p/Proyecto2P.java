@@ -18,6 +18,7 @@ public class Proyecto2P {
         // TODO code application logic here
         
         System.out.print("Hola, buenos días");
+        System.out.print("Hola, buenos días Soy Rangel");
     }
     
 }
