@@ -1,16 +1,20 @@
 package Views;
 
 import Formatos.Botones;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -21,6 +25,7 @@ public class index extends JFrame {
     JButton login = new Botones("LOGIN");
     JButton registro = new Botones("CREATE ACCOUNT");
     FondoPanel fondo = new FondoPanel();
+    JLabel Titulo = new JLabel("SAVALA CONFERENZE");
     
     
      public index () {
@@ -46,8 +51,13 @@ public class index extends JFrame {
         this.setLayout(null);
         BordeRedondo border = new BordeRedondo(40); // radio = 10
         
+        Titulo.setBounds(145, 60, 700, 100);
+        Titulo.setFont(new java.awt.Font("Segoe UI Light", Font.BOLD, 64));
+        Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Titulo.setForeground(Color.WHITE);
+        
         Botones.setLayout(null);
-        Botones.setBounds(300, 250, 400, 300);
+        Botones.setBounds (300, 250, 400, 300);
         Botones.setBackground(new java.awt.Color(233, 196, 106));
         
         
@@ -56,6 +66,14 @@ public class index extends JFrame {
         login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         login.setBorder(border);
         login.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        login.addActionListener (
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        
+                    }
+                }
+        );
         
         registro.setBounds(50, 185, 300, 45);
         registro.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
@@ -66,6 +84,7 @@ public class index extends JFrame {
         Botones.add(login);
         Botones.add(registro);
         getContentPane().add(Botones);
+        getContentPane().add(Titulo);
         
     }
      
