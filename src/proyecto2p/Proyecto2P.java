@@ -13,7 +13,7 @@ public class Proyecto2P {
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
         
-        new Login().setVisible(true);
+        new index().setVisible(true);
     }
     
 }

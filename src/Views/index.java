@@ -25,7 +25,8 @@ public class index extends JFrame {
     JButton login = new Botones("LOGIN");
     JButton registro = new Botones("CREATE ACCOUNT");
     FondoPanel fondo = new FondoPanel();
-    JLabel Titulo = new JLabel("Conferencias Dinamita");
+    JLabel Titulo = new JLabel("SAVALA CONFERENZE");
+    
     
      public index () {
         //titulo de la ventana
