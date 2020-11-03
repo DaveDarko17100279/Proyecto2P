@@ -5,6 +5,8 @@
  */
 package proyecto2p;
 
+import BD.conexion;
+
 /** Hola amikos de yutudwdaawdwada w 
  *
  * @author DaveDarko
@@ -16,6 +18,7 @@ public class Proyecto2P {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        conexion conex = new conexion();
         
         System.out.println("Hola, buenos días");
         System.out.print("Hola, buenos días");
