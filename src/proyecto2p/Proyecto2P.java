@@ -2,6 +2,7 @@
 package proyecto2p;
 
 import BD.*;
+import Views.Login;
 import Views.index;
 import java.sql.Connection;
 
@@ -12,7 +13,7 @@ public class Proyecto2P {
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
         
-         new index().setVisible(true);
+        new Login().setVisible(true);
     }
     
 }
