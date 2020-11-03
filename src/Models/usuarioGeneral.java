@@ -3,13 +3,13 @@ package Models;
 import java.sql.*;
 
 public class usuarioGeneral {
-    String Nombre;
-    String ApellidoPaterno;
-    String ApellidoMaterno;
-    Date FechaNacimiento;
-    String Correo;
-    long telefono;
-    String Contraseña;
+    private String Nombre;
+    private String ApellidoPaterno;
+    private String ApellidoMaterno;
+    private Date FechaNacimiento;
+    private String Correo;
+    private long telefono;
+    private String Contraseña;
 
     public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña) {
         this.Nombre = Nombre;
