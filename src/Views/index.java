@@ -74,13 +74,7 @@ public class index extends JFrame {
         }
     }
     public void transparenciaButton() {
-        /*login.setOpaque(false);
-        login.setContentAreaFilled(false);
-        login.setBorderPainted(true);
         
-        registro.setOpaque(false);
-        registro.setContentAreaFilled(false);
-        registro.setBorderPainted(true);*/
         
         Botones.setOpaque(false);
         
