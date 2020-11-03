@@ -26,7 +26,10 @@ public class Proyecto2P {
         System.out.println("Hola, buenos días");
         System.out.print("Hola, buenos días");
         System.out.print("Hola, buenos días Soy Rangel");
+        System.out.print("Eduardo Canadiense");
+
          new index().setVisible(true);
+         //Hola Mundo Cómo estas
         //Hola Mundo da
     }
     
