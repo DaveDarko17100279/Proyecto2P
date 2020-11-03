@@ -29,7 +29,7 @@ public class conexion {
                 System.out.println("Conexion exitosa");
             }
         }catch (ClassNotFoundException | SQLException e){
-            
+            System.out.println("Conexion fallida");
         }
     }
     
