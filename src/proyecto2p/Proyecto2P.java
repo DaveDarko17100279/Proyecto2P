@@ -2,7 +2,10 @@
 package proyecto2p;
 
 import BD.*;
+import Models.usuarioGeneral;
+import Views.Login;
 import Views.index;
+import Views.Menu;
 import java.sql.Connection;
 
 
@@ -12,7 +15,12 @@ public class Proyecto2P {
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
         
-        new index().setVisible(true);
+        usuarioGeneralBD userBD = new usuarioGeneralBD();
+        usuarioGeneral user;
+        user = userBD.getUsuario(5);
+        System.out.println(user.getNombre());
+        
+        new Menu(5).setVisible(true);
     }
     
 }

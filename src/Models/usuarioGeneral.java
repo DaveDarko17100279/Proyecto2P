@@ -3,6 +3,7 @@ package Models;
 import java.sql.*;
 
 public class usuarioGeneral {
+    private int id;
     private String Nombre;
     private String ApellidoPaterno;
     private String ApellidoMaterno;
@@ -14,7 +15,8 @@ public class usuarioGeneral {
     public usuarioGeneral() {
     }
     
-    public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
+    public usuarioGeneral(int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
+        this.id = id;
         this.Nombre = Nombre;
         this.ApellidoPaterno = ApellidoPaterno;
         this.ApellidoMaterno = ApellidoMaterno;
@@ -25,6 +27,10 @@ public class usuarioGeneral {
         this.Tipo = Tipo;
     }
 
+    public int getId() {
+        return id;
+    }
+    
     public int getTipo() {
         return Tipo;
     }
@@ -55,6 +61,10 @@ public class usuarioGeneral {
 
     public String getContraseña() {
         return Contraseña;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNombre(String Nombre) {
@@ -88,6 +98,4 @@ public class usuarioGeneral {
     public void setTipo(int Tipo) {
         this.Tipo = Tipo;
     }
-    
-    
 }
