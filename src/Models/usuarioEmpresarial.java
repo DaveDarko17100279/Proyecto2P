@@ -7,8 +7,16 @@ import java.sql.Date;
 public class usuarioEmpresarial  extends usuarioGeneral{
     int Empresa;
     
+    public usuarioEmpresarial() {
+    }
+
     public usuarioEmpresarial(int Empresa, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
         super(Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Correo, telefono, Contraseña, Tipo);
+        this.Empresa = Empresa;
+    }
+    
+    public usuarioEmpresarial(int Empresa,int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
+        super(id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Correo, telefono, Contraseña, Tipo);
         this.Empresa = Empresa;
     }
 

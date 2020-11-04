@@ -27,6 +27,17 @@ public class usuarioGeneral {
         this.Tipo = Tipo;
     }
 
+    public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
+        this.Nombre = Nombre;
+        this.ApellidoPaterno = ApellidoPaterno;
+        this.ApellidoMaterno = ApellidoMaterno;
+        this.FechaNacimiento = FechaNacimiento;
+        this.Correo = Correo;
+        this.telefono = telefono;
+        this.Contraseña = Contraseña;
+        this.Tipo = Tipo;
+    }
+
     public int getId() {
         return id;
     }
