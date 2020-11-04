@@ -22,15 +22,15 @@ import javax.swing.border.Border;
 public class index extends JFrame {
     
     JPanel Botones  = new JPanel();
-    JButton login = new Botones("LOGIN");
-    JButton registro = new Botones("CREATE ACCOUNT");
+    JButton login = new Botones("INICIA SESION");
+    JButton registro = new Botones("CREA UNA CUENTA");
     FondoPanel fondo = new FondoPanel();
     JLabel Titulo = new JLabel("SAVALA CONFERENZE");
     
     
      public index () {
         //titulo de la ventana
-        setTitle("Index");
+        setTitle("Inicio");
         //tamaño de la ventana
         setSize(1000,800);
         //Se podra redimencionar
@@ -39,10 +39,11 @@ public class index extends JFrame {
         setLocationRelativeTo(null);
         //Salir
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+        //Agregamos Fondo con imagen 
         this.setContentPane(fondo);
         //Crear la interfaz
         init();
+        //Clase de trasnparencia de botones
         transparenciaButton();
         
     }
@@ -58,7 +59,7 @@ public class index extends JFrame {
         
         Botones.setLayout(null);
         Botones.setBounds (300, 250, 400, 300);
-        Botones.setBackground(new java.awt.Color(233, 196, 106));
+        Botones.setBackground(new java.awt.Color(233, 196, 106, 240));
         
         
         login.setBounds(50, 70, 300, 45);
@@ -70,16 +71,29 @@ public class index extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e){
-                        
+                       
+                       dispose();
+                       new Login().setVisible(true);
                     }
                 }
         );
+        
         
         registro.setBounds(50, 185, 300, 45);
         registro.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
         registro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registro.setBorder(border);
         registro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        registro.addActionListener (
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                       
+                       dispose();
+                       new ChooseUser().setVisible(true);
+                    }
+                }
+        );
         
         Botones.add(login);
         Botones.add(registro);
@@ -114,7 +128,6 @@ public class index extends JFrame {
     }
     
     class BordeRedondo implements Border {
-
         private int radio;  
 
         BordeRedondo(int radius) {

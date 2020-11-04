@@ -17,8 +17,8 @@ import javax.swing.JTextField;
  */
 
 public class JTextFieldHint  extends JTextField implements FocusListener{
-    private final Font fontLost = new Font("Monaco",Font.BOLD, 16);
-    private final Font fontGained = new Font("Monaco", Font.BOLD,16);
+    private final Font fontLost = new Font("Segoe UI Light",Font.BOLD, 16);
+    private final Font fontGained = new Font("Segoe UI Light", Font.BOLD,16);
     private final Color colorLost = Color.LIGHT_GRAY;
     private Color colorGained = Color.BLACK;
     private String hint;
