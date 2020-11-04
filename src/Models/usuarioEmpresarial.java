@@ -15,8 +15,8 @@ public class usuarioEmpresarial  extends usuarioGeneral{
         this.Empresa = Empresa;
     }
     
-    public usuarioEmpresarial(int Empresa,int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
-        super(id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Correo, telefono, Contraseña, Tipo);
+    public usuarioEmpresarial(int Empresa,int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo, int zenis) {
+        super(id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Correo, telefono, Contraseña, Tipo, zenis);
         this.Empresa = Empresa;
     }
 

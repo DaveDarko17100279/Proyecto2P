@@ -12,10 +12,11 @@ public class usuarioGeneral {
     private long telefono;
     private String Contraseña;
     private int Tipo;
+    private int zenis;
     public usuarioGeneral() {
     }
     
-    public usuarioGeneral(int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
+    public usuarioGeneral(int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo, int zenis) {
         this.id = id;
         this.Nombre = Nombre;
         this.ApellidoPaterno = ApellidoPaterno;
@@ -25,6 +26,7 @@ public class usuarioGeneral {
         this.telefono = telefono;
         this.Contraseña = Contraseña;
         this.Tipo = Tipo;
+        this.zenis = zenis;
     }
 
     public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
@@ -36,6 +38,10 @@ public class usuarioGeneral {
         this.telefono = telefono;
         this.Contraseña = Contraseña;
         this.Tipo = Tipo;
+    }
+
+    public int getZenis() {
+        return zenis;
     }
 
     public int getId() {
@@ -109,4 +115,9 @@ public class usuarioGeneral {
     public void setTipo(int Tipo) {
         this.Tipo = Tipo;
     }
+
+    public void setZenis(int zenis) {
+        this.zenis = zenis;
+    }
+    
 }
