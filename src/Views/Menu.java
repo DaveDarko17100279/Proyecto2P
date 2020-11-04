@@ -1,5 +1,7 @@
 package Views;
 
+import Models.usuarioGeneral;
+import Administracion.usuarioGeneralAdmin;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.GroupLayout;
@@ -16,8 +18,13 @@ import javax.swing.JPanel;
  */
 
 public class Menu extends JFrame {
+    // Data
+    private final int id;
+    private usuarioGeneral user;
+    private usuarioGeneralAdmin userAdmin;
+    
     // Text display
-    private final JLabel labWelcome = new JLabel("Bienvenido ");
+    private final JLabel labWelcome = new JLabel("");
     private final JLabel labOwnConfer = new JLabel("MIS CONFERENCIAS");
     private final JLabel labOutsideConfer = new JLabel("OTRAS CONFERENCIAS");
     
@@ -28,8 +35,10 @@ public class Menu extends JFrame {
     private final JButton btnToAssist = new JButton("Conferencias a las que estoy inscrito");
     private final JButton btnSignUp = new JButton("Inscribirme a una conferencia");
     
-    public Menu(int ID_) {
+    public Menu(int ID) {
         super();
+        this.id = ID;
+        user = userAdmin.buscar(id);
         init();
     }
 
@@ -45,6 +54,7 @@ public class Menu extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        getContentPane().setBackground(new Color(0xACDBE5));
         
         // Layout
         GroupLayout menu = new GroupLayout(getContentPane());
@@ -64,6 +74,7 @@ public class Menu extends JFrame {
         
         // Labels config
         labWelcome.setFont(fontTitle);
+        labWelcome.setText("Bienvenido " + user.getNombre());
         labOwnConfer.setFont(fontSubtitle);
         labOutsideConfer.setFont(fontSubtitle);
         
