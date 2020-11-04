@@ -2,11 +2,13 @@ package Views;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Insets;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -25,8 +27,8 @@ public class Menu extends JFrame {
     private final JButton btnManage = new JButton("Gestionar conferencias existentes");
     private final JButton btnToAssist = new JButton("Conferencias a las que estoy inscrito");
     private final JButton btnSignUp = new JButton("Inscribirme a una conferencia");
-
-    public Menu() {
+    
+    public Menu(int ID_) {
         super();
         init();
     }
@@ -39,7 +41,8 @@ public class Menu extends JFrame {
         // Ventana
         this.setTitle("CoConferencias");
         this.setSize(900, 600);
-        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+//        this.setDefaultCloseOperation(HIDE_ON_CLOSE); **********************************
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
@@ -57,6 +60,7 @@ public class Menu extends JFrame {
         btnConfig(btnManage);
         btnConfig(btnToAssist);
         btnConfig(btnSignUp);
+        labOwnConfer.setIcon((Icon) new ImageIcon("/Imagenes/añadir.png"));
         
         // Labels config
         labWelcome.setFont(fontTitle);
@@ -65,16 +69,19 @@ public class Menu extends JFrame {
         
         menu.setVerticalGroup(
             menu.createSequentialGroup()
+                .addGap(50)
                 .addGroup(
                     menu.createParallelGroup()
                         .addComponent(labWelcome)
                         .addComponent(btnInfo)
+                        .addGap(80)
                 )
                 .addGroup(
                     menu.createSequentialGroup()
                         .addComponent(labOwnConfer)
                         .addComponent(btnCreate)
                         .addComponent(btnManage)
+                        .addGap(40)
                 )
                 .addGroup(
                     menu.createSequentialGroup()
@@ -86,9 +93,10 @@ public class Menu extends JFrame {
         
         menu.setHorizontalGroup(
             menu.createSequentialGroup()
+                .addGap(90)
                 .addGroup(
                     menu.createParallelGroup()
-                        .addComponent(labWelcome, 650, 650, 650)
+                        .addComponent(labWelcome, 500, 500, 500)
                         .addComponent(labOwnConfer)
                         .addComponent(btnCreate)
                         .addComponent(btnManage)
