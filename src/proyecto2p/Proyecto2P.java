@@ -15,12 +15,7 @@ public class Proyecto2P {
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
         
-        usuarioGeneralBD userBD = new usuarioGeneralBD();
-        usuarioGeneral user;
-        user = userBD.getUsuario(5);
-        System.out.println(user.getNombre());
-        
-        new Menu(5).setVisible(true);
+        new index().setVisible(true);
     }
     
 }
