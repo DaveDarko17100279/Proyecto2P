@@ -1,5 +1,6 @@
 package Views;
 
+import Formatos.Botones;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -9,30 +10,28 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 
-public class Login extends JFrame {
+public class ChooseUser extends JFrame {
     
-    private JPanel PanelPrincipal;
-    private JLabel nombre = new JLabel("Nombre:");
-    private JTextField Nombre = new JTextField();
-    private JLabel pass = new JLabel("Contraseña:");
-    private JTextField password = new JTextField();
-    private FondoPanel fondo = new FondoPanel();
-    private JLabel Titulo = new JLabel("Inicia Sesion");
+    JPanel Botones  = new JPanel();
+    JButton General = new Botones("GENERAL");
+    JButton Empresarial  = new Botones("EMPRESARIAL");
+    FondoPanel fondo = new FondoPanel();
+    JLabel Titulo = new JLabel("SELECCIONA");
     JButton back = new JButton("<");
     
-    public Login () {
+     public ChooseUser () {
         //titulo de la ventana
-        setTitle("Ingresa");
+        setTitle("Usuario");
         //tamaño de la ventana
         setSize(1000,800);
         //Se podra redimencionar
@@ -41,18 +40,20 @@ public class Login extends JFrame {
         setLocationRelativeTo(null);
         //Salir
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-         this.setContentPane(fondo);
+        //Agregamos Fondo con imagen 
+        this.setContentPane(fondo);
         //Crear la interfaz
         init();
+        //Clase de trasnparencia de botones
+        transparenciaButton();
         
-            
     }
-    private void init() {
+     private void init() {
         // Layout 
         this.setLayout(null);
         BordeRedondo border = new BordeRedondo(40); // radio = 10
         
-        Titulo.setBounds(158, 60, 700, 100);
+        Titulo.setBounds(145, 60, 700, 100);
         Titulo.setFont(new java.awt.Font("Segoe UI Light", Font.BOLD, 64));
         Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Titulo.setForeground(Color.WHITE);
@@ -62,7 +63,6 @@ public class Login extends JFrame {
         back.setForeground(Color.WHITE);
         back.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back.setBorder(border);
-        back.setBackground(new Color(0,0,0,0));
         back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         back.addActionListener (
                 new ActionListener() {
@@ -74,44 +74,57 @@ public class Login extends JFrame {
                 }
         );
         
-        PanelPrincipal = new JPanel();
-        PanelPrincipal.setLayout(null);
-        PanelPrincipal.setBounds(300, 250, 400, 300);
-        PanelPrincipal.setBackground(new java.awt.Color(233, 196, 106, 100));
+        Botones.setLayout(null);
+        Botones.setBounds (300, 250, 400, 300);
+        Botones.setBackground(new java.awt.Color(233, 196, 106, 240));
         
-        nombre.setBounds(20, 15, 300, 40);
-        nombre.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
-        nombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        nombre.setForeground(Color.WHITE);
         
-        Nombre.setBounds(20, 70, 300, 40);
-        Nombre.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
-        Nombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        General.setBounds(50, 70, 300, 45);
+        General.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
+        General.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        General.setBorder(border);
+        General.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        General.addActionListener (
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                       dispose();
+                       new CreateAccountG().setVisible(true);
+                    }
+                }
+        );
         
-        pass.setBounds(20, 125, 300, 40);
-        pass.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
-        pass.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        pass.setForeground(Color.WHITE);
         
-        password.setBounds(20,180 , 300, 40);
-        password.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
-        password.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        Empresarial.setBounds(50, 185, 300, 45);
+        Empresarial.setFont(new java.awt.Font("Segoe UI Light", 1, 18));
+        Empresarial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Empresarial.setBorder(border);
+        Empresarial.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        Empresarial.addActionListener (
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                       
+                       dispose();
+                       new CreateAccountE().setVisible(true);
+                    }
+                }
+        );
         
-        PanelPrincipal.add(nombre);
-        PanelPrincipal.add(Nombre);
-        PanelPrincipal.add(pass);
-        PanelPrincipal.add(password);
-        
-        getContentPane().add(back);
+        Botones.add(General);
+        Botones.add(Empresarial);
+        getContentPane().add(Botones);
         getContentPane().add(Titulo);
-        getContentPane().add(PanelPrincipal);
+        getContentPane().add(back);
+        
     }
+     
     class FondoPanel extends JPanel {
         private Image imagen;
          
         @Override
         public void paint(Graphics g) {
-            imagen = new ImageIcon(getClass().getResource("/Imagenes/login.jpeg")).getImage();
+            imagen = new ImageIcon(getClass().getResource("/Imagenes/User.jpeg")).getImage();
          
             g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
             
@@ -120,8 +133,16 @@ public class Login extends JFrame {
             super.paint(g);
         }
     }
+    
     public void transparenciaButton() {
-
+        General.setOpaque(false);
+        General.setContentAreaFilled(false);
+        General.setBorderPainted(true);
+        
+        Empresarial.setOpaque(false);
+        Empresarial.setContentAreaFilled(false);
+        Empresarial.setBorderPainted(true);
+        
         back.setOpaque(false);
         back.setContentAreaFilled(false);
         back.setBorderPainted(true);
@@ -147,5 +168,3 @@ public class Login extends JFrame {
         }
     }
 }
-
-
