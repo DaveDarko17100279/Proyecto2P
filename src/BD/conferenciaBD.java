@@ -71,4 +71,50 @@ public class conferenciaBD {
         }
         return total;//retorna el total
     }
+    
+    public void ingresarConferencista(conferencia confe){//Se ingresan los conferencistas para las conferencias
+        if(verificarConferencistas(confe.getIdConferencia()) ==true){
+            resultado ="Ya no se pueden ingresar mas conferencistas";
+        }else{
+            try {
+            PreparedStatement insertar = cn.prepareStatement("insert into conferencia_conferencistas (ID_Usuario, ID_Conferencia) values (?,?)");
+            insertar.setInt(1, confe.getIdUsuario());
+            insertar.setInt(2, confe.getIdConferencia());
+            insertar.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }
+    
+    public boolean verificarConferencistas(int idConferencia){
+        boolean verificar = false;
+        int total = 0;
+        try {
+            PreparedStatement contar = cn.prepareStatement("select count(ID_Conferencia) from conferencia_conferencistas where ID_Conferencia = ?");
+            contar.setInt(1, idConferencia);
+            ResultSet res = contar.executeQuery();
+            if(res.next()){
+                total = res.getInt(1);
+            }
+            if(total ==3){
+                verificar = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return verificar;
+    }
+    
+    public void masFechas(conferencia confe){//Se ingresan mas fechas para la conferencia
+        try {
+            PreparedStatement insertar = cn.prepareStatement("insert into detalle_conferencia (ID_Conferencia, Fecha_Presentacion,Hora_Inicial, Hora_Finalizacion) values (?,?,?,?)");
+            insertar.setInt(1, confe.getIdConferencia());
+            insertar.setDate(2, confe.getFechaPresentacion());
+            insertar.setTime(3, confe.getHoraInicial());
+            insertar.setTime(4, confe.getHoraFinalizacion());
+        } catch (SQLException ex) {
+            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
