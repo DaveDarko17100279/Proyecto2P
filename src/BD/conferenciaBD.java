@@ -33,11 +33,42 @@ public class conferenciaBD {
             Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    //NO TOCAR POR FAVOR :)
-//    public conferencia[] getConferencias(int idUsuario){
-//        conferencia[] con;
-//        int x = 0;
-//        PreparedStatement buscar = cn.prepareStatement(resultado)
-//        return con; 
-//    }
+    
+    public conferencia[] getConferencias(int idUsuario){//consigue todas las conferencias creadas por un usuario
+        conferencia[] con = new conferencia[totalConferencias(idUsuario)];
+        int x = 0;
+        boolean costo;
+        try {
+            PreparedStatement buscar = cn.prepareStatement("select * from conferencia where ID_Usuario = ?");
+            buscar.setInt(1, idUsuario);
+            ResultSet res = buscar.executeQuery();
+            while(res.next()){
+                if(res.getString("Costo").equals("si")){
+                    costo = true;
+                }else{
+                    costo = false;
+                }
+                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),costo);
+                x++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return con; //retorna un array de objetos con todas las conferencias creadas por el ususario
+    }
+    
+    public int totalConferencias(int idUsuario){//obtiene el total de conferencias creadas por un usuario
+        int total = 0;
+        try {
+            PreparedStatement contar = cn.prepareStatement("select count(ID_Usuario) from conferencia where ID_Usuario = ?");
+            contar.setInt(1, idUsuario);
+            ResultSet res = contar.executeQuery();
+            if(res.next()){
+                total = res.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;//retorna el total
+    }
 }
