@@ -46,6 +46,13 @@ public class conferencia {
         this.CodigoParticipante = CodigoParticipante;
     }
 
+    public conferencia(int idConferencia, Date FechaPresentacion, Time HoraInicial, Time HoraFinalizacion) {
+        this.idConferencia = idConferencia;
+        this.FechaPresentacion = FechaPresentacion;
+        this.HoraInicial = HoraInicial;
+        this.HoraFinalizacion = HoraFinalizacion;
+    }
+
     public int getIdConferencia() {
         return idConferencia;
     }
