@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  *
  * @author Pris
  */
- class RoundedPanel extends JPanel
+ public class RoundedPanel extends JPanel
     {   
         private Color backgroundColor;
         private int cornerRadius = 15;

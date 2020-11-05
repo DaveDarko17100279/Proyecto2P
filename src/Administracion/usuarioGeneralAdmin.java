@@ -28,7 +28,7 @@ public class usuarioGeneralAdmin {
     public static usuarioGeneral buscar(int id) {
         usuarioGeneral resultado = new usuarioGeneral();
         
-        resultado = userGeneralBD.getUsuario(id);
+        //resultado = userGeneralBD.getUsuario(id);
 
         return resultado;
     }
