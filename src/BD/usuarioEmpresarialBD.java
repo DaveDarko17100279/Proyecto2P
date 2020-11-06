@@ -29,6 +29,7 @@ public class usuarioEmpresarialBD {
             insertar.setInt(9, usu.getEmpresa());
             insertar.executeUpdate();
             resultado = "Exito al guardar";
+            System.out.println(resultado);
         } catch (SQLException ex) {
             Logger.getLogger(usuarioEmpresarialBD.class.getName()).log(Level.SEVERE, null, ex);
         }
