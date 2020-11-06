@@ -7,6 +7,8 @@ package Views;
 
 
 import BD.conexion;
+import BD.conferenciaBD;
+import Models.conferencia;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -42,7 +44,7 @@ public class VConferencia extends JFrame {
 
     Connection cn = new conexion().getConnection();
     
-    Object[] fila = new Object[3];
+    Object[] fila = new Object[6];
     
     DefaultTableModel modelo = new DefaultTableModel();
     private JTable tabla = new JTable(modelo);
@@ -145,25 +147,24 @@ public class VConferencia extends JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Cupo");
         
-        try {
-            PreparedStatement buscar = cn.prepareStatement("SELECT * FROM conferencia WHERE ID_Conferencia = ?");
-            buscar.setInt(1,7);
-            //guardo el resultado en res
-            ResultSet res = buscar.executeQuery();
 
-            if (res.next()) {
-                fila[0] = res.getString("Nombre_Conferencia");
-                fila[1] = String.valueOf(res.getInt("Precio"));
-                fila[2] = String.valueOf(res.getInt("Cupo_Total"));
-                modelo.addRow(fila); // Añade una fila al final
-                System.out.println(res.getString("Nombre_Conferencia"));
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro a nadie");
+            conferenciaBD usuario = new conferenciaBD();
+            conferencia[] con = new conferencia[usuario.getConferencias(6).length];
+            for(int i = 0; i<con.length;i++){
+                con[i] = usuario.getConferencias(6)[i];
             }
-        } catch (SQLException ex) {
-            //verifica que se haya realizado con exito
-            JOptionPane.showMessageDialog(null, "Algo salio mal al guardar los datos");
-        }
+            
+            System.out.println(con[1].getNombreConferencia());
+            System.out.println(con[1].getCupoTotal());
+            
+            for(int i = 0; i < con.length; i++){
+                fila[0] = con[i].getNombreConferencia();
+                fila[1] = String.valueOf(con[i].getPrecio());
+                fila[2] = String.valueOf(con[i].getCupoTotal());
+                fila[3] = "Hola";
+                modelo.addRow(fila); // Añade una fila al final
+            }
+
         
         // LLENAR LA TABLA
         
