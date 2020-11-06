@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -72,14 +71,16 @@ public class ConferenciasIns extends JFrame {
     JLabel horaInicioM  = new JLabel("");
     JLabel horaFinalM  = new JLabel("");
     
-    
+    int idU;
     int pos;
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     String fechaComoCadena;
  
 
-     public ConferenciasIns () {
+     public ConferenciasIns (int id) {
+         
+         this.idU = id;
         //titulo de la ventana
         setTitle("Mis conferencias Inscritas");
         //tamaño de la ventana
@@ -286,11 +287,11 @@ public class ConferenciasIns extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                   pos++;
-                  if(pos < new ConferenciasInsBD().BindList().size()){
+                  if(pos < new ConferenciasInsBD(idU).BindList().size()){
                       ShowPosInfo(pos);
                   }
                   else{
-                      pos = new ConferenciasInsBD().BindList().size() - 1;
+                      pos = new ConferenciasInsBD(idU).BindList().size() - 1;
                       ShowPosInfo(pos);
                   }
             }
@@ -355,7 +356,7 @@ public class ConferenciasIns extends JFrame {
      //Muestra Información de las conferencias 
       public void ShowPosInfo(int index){
           
-          if(new ConferenciasInsBD().BindList().size() == 0){
+          if(new ConferenciasInsBD(idU).BindList().size() == 0){
             Botones.setVisible(false);
                              
             NoConferences.setLayout(null);
@@ -376,13 +377,13 @@ public class ConferenciasIns extends JFrame {
             getContentPane().add(NoConferences);
               
           }else{
-            IDM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getIdUsuario()));
-            NombreM.setText(new ConferenciasInsBD().BindList().get(index).getNombreConferencia());
-            CupoM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getCupoTotal()));
-            PrecioM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getPrecio()));
-            FechaM.setText(sdf.format(new ConferenciasInsBD().BindList().get(index).getFechaPresentacion()));
-            horaInicioM.setText(String.valueOf(new ConferenciasInsBD().BindList().get(index).getHoraInicial()));
-            horaFinalM.setText(String.valueOf(new ConferenciasInsBD().BindList().get(index).getHoraFinalizacion()));
+            IDM.setText(Integer.toString(new ConferenciasInsBD(idU).BindList().get(index).getIdUsuario()));
+            NombreM.setText(new ConferenciasInsBD(idU).BindList().get(index).getNombreConferencia());
+            CupoM.setText(Integer.toString(new ConferenciasInsBD(idU).BindList().get(index).getCupoTotal()));
+            PrecioM.setText(Integer.toString(new ConferenciasInsBD(idU).BindList().get(index).getPrecio()));
+            FechaM.setText(sdf.format(new ConferenciasInsBD(idU).BindList().get(index).getFechaPresentacion()));
+            horaInicioM.setText(String.valueOf(new ConferenciasInsBD(idU).BindList().get(index).getHoraInicial()));
+            horaFinalM.setText(String.valueOf(new ConferenciasInsBD(idU).BindList().get(index).getHoraFinalizacion()));
           }
          
     }
