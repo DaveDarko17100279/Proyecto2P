@@ -1,5 +1,6 @@
 package Views;
 
+import BD.ConferenciasInsBD;
 import BD.usuarioEmpresarialBD;
 import BD.usuarioGeneralBD;
 import Formatos.*;
@@ -116,6 +117,7 @@ public class NewLogin extends JFrame {
                 usuarioGeneral UG = new usuarioGeneral();
                 UG = new usuarioGeneralBD().getUsuario(correo2, contraseña);
                 //agregar view de menu con el usuario
+                new ConferenciasInsBD().Usuario(UG);
             }
         });
        
