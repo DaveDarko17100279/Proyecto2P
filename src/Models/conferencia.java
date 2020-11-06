@@ -27,6 +27,14 @@ public class conferencia {
         this.HoraFinalizacion = HoraFinalizacion;
     }
 
+    public conferencia(int idConferencia, String NombreConferencia, int CupoTotal, int Precio, boolean Costo) {
+        this.idConferencia = idConferencia;
+        this.NombreConferencia = NombreConferencia;
+        this.CupoTotal = CupoTotal;
+        this.Precio = Precio;
+        this.Costo = Costo;
+    }
+
     public conferencia(int idConferencia, int idUsuario) {
         this.idConferencia = idConferencia;
         this.idUsuario = idUsuario;
@@ -36,6 +44,13 @@ public class conferencia {
         this.idConferencia = idConferencia;
         this.idUsuario = idUsuario;
         this.CodigoParticipante = CodigoParticipante;
+    }
+
+    public conferencia(int idConferencia, Date FechaPresentacion, Time HoraInicial, Time HoraFinalizacion) {
+        this.idConferencia = idConferencia;
+        this.FechaPresentacion = FechaPresentacion;
+        this.HoraInicial = HoraInicial;
+        this.HoraFinalizacion = HoraFinalizacion;
     }
 
     public int getIdConferencia() {

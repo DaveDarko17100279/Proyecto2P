@@ -3,6 +3,7 @@ package Models;
 import java.sql.*;
 
 public class usuarioGeneral {
+    private int id;
     private String Nombre;
     private String ApellidoPaterno;
     private String ApellidoMaterno;
@@ -11,9 +12,23 @@ public class usuarioGeneral {
     private long telefono;
     private String Contraseña;
     private int Tipo;
+    private int zenis;
     public usuarioGeneral() {
     }
     
+    public usuarioGeneral(int id, String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo, int zenis) {
+        this.id = id;
+        this.Nombre = Nombre;
+        this.ApellidoPaterno = ApellidoPaterno;
+        this.ApellidoMaterno = ApellidoMaterno;
+        this.FechaNacimiento = FechaNacimiento;
+        this.Correo = Correo;
+        this.telefono = telefono;
+        this.Contraseña = Contraseña;
+        this.Tipo = Tipo;
+        this.zenis = zenis;
+    }
+
     public usuarioGeneral(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Correo, long telefono, String Contraseña, int Tipo) {
         this.Nombre = Nombre;
         this.ApellidoPaterno = ApellidoPaterno;
@@ -25,6 +40,14 @@ public class usuarioGeneral {
         this.Tipo = Tipo;
     }
 
+    public int getZenis() {
+        return zenis;
+    }
+
+    public int getId() {
+        return id;
+    }
+    
     public int getTipo() {
         return Tipo;
     }
@@ -55,6 +78,10 @@ public class usuarioGeneral {
 
     public String getContraseña() {
         return Contraseña;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNombre(String Nombre) {
@@ -88,6 +115,9 @@ public class usuarioGeneral {
     public void setTipo(int Tipo) {
         this.Tipo = Tipo;
     }
-    
+
+    public void setZenis(int zenis) {
+        this.zenis = zenis;
+    }
     
 }
