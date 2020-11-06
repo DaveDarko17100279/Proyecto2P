@@ -39,16 +39,11 @@ public class conferenciaBD {
         int x = 0;
         boolean costo;
         try {
-            PreparedStatement buscar = cn.prepareStatement("select * from conferencia where ID_Usuario = ?");
+            PreparedStatement buscar = cn.prepareStatement("select conferencia.ID_Conferencia, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion from conferencia INNER JOIN detalles_conferencia on conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia where conferencia.ID_Usuario = ?");
             buscar.setInt(1, idUsuario);
             ResultSet res = buscar.executeQuery();
             while(res.next()){
-                if(res.getString("Costo").equals("si")){
-                    costo = true;
-                }else{
-                    costo = false;
-                }
-                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),costo);
+                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),res.getDate("Fecha_Presentacion"), res.getTime("Hora_Inicial"), res.getTime("Hora_Finalizacion"));
                 x++;
             }
         } catch (SQLException ex) {
