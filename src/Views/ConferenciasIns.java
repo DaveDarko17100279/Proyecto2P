@@ -20,7 +20,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-
+/**
+ *
+ * @author Pris
+ */
 public class ConferenciasIns extends JFrame {
     
     JPanel Botones  = new RoundedPanel(30, new Color(255, 252, 255, 200));
