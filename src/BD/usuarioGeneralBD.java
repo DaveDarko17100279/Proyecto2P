@@ -25,6 +25,7 @@ public class usuarioGeneralBD {
             insertar.setInt(8, usu.getTipo());
             insertar.executeUpdate();
             resultado = "Exito al guardar";
+            System.out.println(resultado);
         } catch (SQLException ex) {
             Logger.getLogger(usuarioGeneralBD.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
@@ -41,6 +42,7 @@ public class usuarioGeneralBD {
             while (res.next()){
                 usu = new usuarioGeneral(res.getInt("ID_Usuario"),res.getString("Nombre_s"), res.getString("Apellido_Paterno"), res.getString("Apellido_Materno"), res.getDate("Fecha_Nacimiento"), res.getString("Correo"), res.getLong("Telefono"), res.getString("Contraseña"), res.getInt("ID_TU"), res.getInt("Zenis"));
             }
+            System.out.println("Succesfuly");
         } catch (SQLException ex) {
             Logger.getLogger(usuarioGeneralBD.class.getName()).log(Level.SEVERE, null, ex);
         }
