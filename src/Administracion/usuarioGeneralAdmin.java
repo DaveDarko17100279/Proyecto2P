@@ -21,14 +21,10 @@ public class usuarioGeneralAdmin {
         }
     }
     
-//    public static int cantidad() {
-//        return userGeneralBD.size();
-//    }
-    
     public static usuarioGeneral buscar(int id) {
         usuarioGeneral resultado = new usuarioGeneral();
         
-        //resultado = userGeneralBD.getUsuario(id);
+        resultado = userGeneralBD.getUsuarioByID(id);
 
         return resultado;
     }
