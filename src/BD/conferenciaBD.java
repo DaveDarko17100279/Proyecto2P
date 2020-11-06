@@ -39,24 +39,37 @@ public class conferenciaBD {
         int x = 0;
         boolean costo;
         try {
-            PreparedStatement buscar = cn.prepareStatement("select * from conferencia where ID_Usuario = ?");
+            PreparedStatement buscar = cn.prepareStatement("select * from conferencia where ID_Usuario = ? ");
             buscar.setInt(1, idUsuario);
             ResultSet res = buscar.executeQuery();
             while(res.next()){
-                if(res.getString("Costo").equals("si")){
-                    costo = true;
-                }else{
-                    costo = false;
-                }
-                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),costo);
+                System.out.println("Hola 2");
+                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),getDetalle(res.getInt("ID_Conferencia")).getFechaPresentacion(), getDetalle(res.getInt("ID_Conferencia")).getHoraInicial(), getDetalle(res.getInt("ID_Conferencia")).getHoraFinalizacion());
                 x++;
             }
         } catch (SQLException ex) {
             Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Hola");
         }
         return con; //retorna un array de objetos con todas las conferencias creadas por el ususario
     }
     
+    public conferencia getDetalle(int idConferencia){
+        conferencia con = new conferencia();
+        try {
+            PreparedStatement buscar = cn.prepareStatement("select * from detalle_conferencias where ID_Conferencia = ? ");
+            buscar.setInt(1, idConferencia);
+            ResultSet res = buscar.executeQuery();
+            while(res.next()){
+                System.out.println("Hola 2");
+                con = new conferencia (res.getInt("ID_Conferencia"), res.getDate("Fecha_Presentacion"), res.getTime("Hora_Inicial"), res.getTime("Hora_Finalizacion"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return con;
+    }
     public int totalConferencias(int idUsuario){//obtiene el total de conferencias creadas por un usuario
         int total = 0;
         try {
