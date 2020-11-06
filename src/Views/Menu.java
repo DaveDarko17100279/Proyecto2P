@@ -2,15 +2,17 @@ package Views;
 
 import Models.usuarioGeneral;
 import Administracion.usuarioGeneralAdmin;
+import BD.conexion;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -67,10 +69,12 @@ public class Menu extends JFrame {
         // Buttons config
         btnConfig(btnInfo);
         btnConfig(btnCreate);
+        btnCreate.addActionListener((ActionEvent e) -> {
+            new CrearConferencia(id).setVisible(true);
+        });
         btnConfig(btnManage);
         btnConfig(btnToAssist);
         btnConfig(btnSignUp);
-        labOwnConfer.setIcon((Icon) new ImageIcon("/Imagenes/añadir.png"));
         
         // Labels config
         labWelcome.setFont(fontTitle);

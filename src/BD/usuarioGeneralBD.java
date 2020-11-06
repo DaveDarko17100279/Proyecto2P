@@ -48,5 +48,36 @@ public class usuarioGeneralBD {
         return usu;//retorna un valor tipo usuarioGeneral
     }
     
+    public usuarioGeneral getUsuarioByID(int id){//obtiene los datos de un usuario de tipo general por su ID
+        ResultSet salida = null; 
+        usuarioGeneral usuario = new usuarioGeneral(); 
+         
+        try { 
+            PreparedStatement sql; 
+            System.out.println(id); 
+            sql = cn.prepareStatement("select * from informacion_usuario where ID_Usuario = ?"); 
+            sql.setInt(1, id); 
+            salida = sql.executeQuery(); 
+         
+            while(salida.next()) { 
+                usuario.setId(salida.getInt("ID_Usuario")); 
+                usuario.setNombre(salida.getString("Nombre_s")); 
+                usuario.setApellidoPaterno(salida.getString("Apellido_Paterno")); 
+                usuario.setApellidoMaterno(salida.getString("Apellido_Materno")); 
+                usuario.setFechaNacimiento(salida.getDate("Fecha_Nacimiento")); 
+                usuario.setCorreo(salida.getString("Correo")); 
+                usuario.setTelefono(salida.getLong("Telefono")); 
+                usuario.setContraseña(salida.getString("Contraseña")); 
+                usuario.setTipo(salida.getInt("ID_TU")); 
+            System.out.println("Hay coincidencias"); 
+            } 
+        } 
+        catch (SQLException ex) { 
+            System.out.println("No hay coincidencias"); 
+        } 
+         
+        return usuario; 
+    }
+    
     
 }

@@ -17,9 +17,11 @@ public class Proyecto2P {
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
         
-        new ConferenciasIns().setVisible(true);
+        new Menu(1).setVisible(true);
         
-        new index().setVisible(true);
+//        new ConferenciasIns().setVisible(true);
+//        
+//        new index().setVisible(true);
     }
     
 }
