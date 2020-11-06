@@ -4,9 +4,8 @@ package proyecto2p;
 import BD.*;
 import Models.*;
 import Views.ConferenciasIns;
+import Views.CrearConferencia;
 import Views.DetallesConferenciaAjena;
-import Views.Login;
-import Views.index;
 import Views.Menu;
 import Views.NewIndex;
 import Views.VConferencia;
@@ -19,7 +18,7 @@ public class Proyecto2P {
         conexion conex = new conexion();
         Connection cn = conex.getConnection();
         
-        new NewIndex().setVisible(true);
+//        new Menu(1).setVisible(true);
         //new ConferenciasIns().setVisible(true);
 
         

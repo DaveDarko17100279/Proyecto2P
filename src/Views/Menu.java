@@ -50,7 +50,7 @@ public class Menu extends JFrame {
         Font fontText = new Font("Segoe UI Light", 0, 18);
                 
         // Ventana
-        this.setTitle("CoConferencias");
+        this.setTitle("Savala Conferenzes");
         this.setSize(900, 600);
 //        this.setDefaultCloseOperation(HIDE_ON_CLOSE); **********************************
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

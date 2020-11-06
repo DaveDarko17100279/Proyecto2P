@@ -1,5 +1,6 @@
 package Views;
 
+import Administracion.conferenciaAdmin;
 import Administracion.usuarioGeneralAdmin;
 import Formatos.JTextFieldHint;
 import Models.conferencia;
@@ -7,13 +8,11 @@ import Models.usuarioGeneral;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.sql.Time;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -71,10 +70,9 @@ public class CrearConferencia extends JFrame {
         Font fontText = new Font("Segoe UI Light", 1, 16);
         
         // Ventana
-        this.setTitle("Crear conferencia" + user.getNombre());
+        this.setTitle("Crear conferencia");
         this.setSize(900, 660);
-//        this.setDefaultCloseOperation(HIDE_ON_CLOSE); **********************************
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         getContentPane().setBackground(new Color(0xACDBE5));
@@ -90,7 +88,10 @@ public class CrearConferencia extends JFrame {
         // Buttons config
         btnConfig(btnCreate);
         btnCreate.addActionListener((ActionEvent e) -> {
-            validDatos();
+            if(validDatos()) {
+                clean();
+                return;
+            }
         });
         
         // Hints config
@@ -254,9 +255,9 @@ public class CrearConferencia extends JFrame {
         String strDate;
         Date date;
         String strTimeStart;
-        Date timeStart;
+        Time timeStart;
         String strTimeFinish;
-        Date timeFinish;
+        Time timeFinish;
         int year;
         int month;
         int day;
@@ -327,7 +328,7 @@ public class CrearConferencia extends JFrame {
         
         strDate = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day);
         
-        date = parseDate(strDate);
+        date = Date.valueOf(strDate);
         
         if(hourStart > 23 || hourStart < 0 || minStart > 59|| minStart < 0) {
             JOptionPane.showMessageDialog(null, "Formato de hora de inicio invalido");
@@ -340,43 +341,31 @@ public class CrearConferencia extends JFrame {
         }
         
         strTimeStart = Integer.toString(hourStart) + ":" + Integer.toString(minStart) + ":00";
+        strTimeFinish = Integer.toString(hourFinish) + ":" + Integer.toString(minFinish) + ":00";
         
-        timeStart = parseTime(strTimeStart);
+        timeStart = Time.valueOf(strTimeStart);
+        timeFinish = Time.valueOf(strTimeFinish);
         
-        System.out.println(date + "  |  " + timeStart);
+        System.out.println(date + " " + timeStart + " " + timeFinish);
         
-//        confer = new conferencia(user.getId(), name, cupo, price, costo, date, timeStart, timeFinish);
+        confer = new conferencia(user.getId(), name, cupo, price, costo, date, timeStart, timeFinish);
         
-//        conferenciaAdmin.agregar(confer);
+        if(conferenciaAdmin.agregar(confer))
+            JOptionPane.showMessageDialog(null, "Conferencia agregada con exito");
         
         return true;
     }
     
-    private static Date parseDate(String fecha)
-    {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM");
-        Date fechaDate = null;
-        try {
-            fechaDate = formato.parse(fecha);
-        } 
-        catch (ParseException ex) 
-        {
-            JOptionPane.showMessageDialog(null, "Error al convertir a Date");
-        }
-        return fechaDate;
-    }
-    
-    private static Date parseTime(String fecha)
-    {
-        SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
-        Date time = null;
-        try {
-            time = formato.parse(fecha);
-        } 
-        catch (ParseException ex) 
-        {
-            JOptionPane.showMessageDialog(null, "Error al convertir a Time");
-        }
-        return time;
+    private void clean() {
+        fldName.setText("");
+        fldCupo.setText("");
+        fldPrice.setText("");
+        fldYear.setText("");
+        fldMonth.setText("");
+        fldDay.setText("");
+        fldHourStart.setText("");
+        fldMinStart.setText("");
+        fldHourFinish.setText("");
+        fldMinFinish.setText("");
     }
 }
