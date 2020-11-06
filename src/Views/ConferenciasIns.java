@@ -72,6 +72,8 @@ public class ConferenciasIns extends JFrame {
         
         this.setContentPane(fondo);
         //Crear la interfaz
+         pos = 0;
+         ShowPosInfo(pos);
         init();
         transparenciaButton();
         
@@ -83,8 +85,6 @@ public class ConferenciasIns extends JFrame {
         this.setLayout(null);
         BordeRedondo border = new BordeRedondo(40); // radio = 10
 
-         pos = 0;
-         ShowPosInfo(pos);
                         
         Botones.setLayout(null);
         Botones.setBounds (175, 170, 650, 215);
@@ -272,14 +272,20 @@ public class ConferenciasIns extends JFrame {
     }
      
       public void ShowPosInfo(int index){
-        IDM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getIdUsuario()));
-        NombreM.setText(new ConferenciasInsBD().BindList().get(index).getNombreConferencia());
-        CupoM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getCupoTotal()));
-        PrecioM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getPrecio()));
-        FechaM.setText(sdf.format(new ConferenciasInsBD().BindList().get(index).getFechaPresentacion()));
-        horaInicioM.setText(String.valueOf(new ConferenciasInsBD().BindList().get(index).getHoraInicial()));
-        horaFinalM.setText(String.valueOf(new ConferenciasInsBD().BindList().get(index).getHoraFinalizacion()));
-   
+          
+          if(new ConferenciasInsBD().BindList().size() == 0){
+              JOptionPane.showMessageDialog(null, "No te has inscrito a ninguna conferencia");
+              
+          }else{
+            IDM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getIdUsuario()));
+            NombreM.setText(new ConferenciasInsBD().BindList().get(index).getNombreConferencia());
+            CupoM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getCupoTotal()));
+            PrecioM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getPrecio()));
+            FechaM.setText(sdf.format(new ConferenciasInsBD().BindList().get(index).getFechaPresentacion()));
+            horaInicioM.setText(String.valueOf(new ConferenciasInsBD().BindList().get(index).getHoraInicial()));
+            horaFinalM.setText(String.valueOf(new ConferenciasInsBD().BindList().get(index).getHoraFinalizacion()));
+          }
+         
     }
      
      
