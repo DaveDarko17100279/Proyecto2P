@@ -26,15 +26,35 @@ import javax.swing.border.Border;
  */
 public class ConferenciasIns extends JFrame {
     
+    //Panels
     JPanel Botones  = new RoundedPanel(30, new Color(255, 252, 255, 200));
     JPanel Titulo  = new RoundedPanel(90, new Color(255, 252, 255, 250));
-    JPanel Borde = new RoundedPanel(0, new Color(255, 252, 255, 200));
+    JPanel Borde = new RoundedPanel(45, new Color(255, 252, 255, 200));
+    JPanel NoConferences = new RoundedPanel(30, new Color(255, 252, 255, 200));
+    
+    //Botones
     JButton login = new Botones("MENOS");
     JButton detalles = new Botones("DETALLES");
-    JButton Siguiente = new Botones(">");
-    JButton Anterior = new Botones("<");
+    JButton Siguiente = new Botones();
+    JButton Anterior = new Botones();
+    JButton Regresa = new Botones();
+    JButton Imagen = new Botones();
+    //Iconos de Botones
+    Image photo  = new ImageIcon(this.getClass().getResource("/Imagenes/return1.png")).getImage();
+    Image left  = new ImageIcon(this.getClass().getResource("/Imagenes/left.png")).getImage();
+    Image right  = new ImageIcon(this.getClass().getResource("/Imagenes/right.png")).getImage();
+    Image expand  = new ImageIcon(this.getClass().getResource("/Imagenes/expand1.png")).getImage();
+    Image collapse  = new ImageIcon(this.getClass().getResource("/Imagenes/collapse.png")).getImage();
+    Image calamardo  = new ImageIcon(this.getClass().getResource("/Imagenes/cora.png")).getImage();
+
+
     FondoPanel fondo = new FondoPanel();
+    
+    //Título de la View
     JLabel Title = new JLabel("M I S  C O N F E R E N C I A S");
+    JLabel Mensaje = new JLabel("NO ESTAS INSCRITO A NINGUNA CONFERENCIA");
+    
+    //Títulos
     JLabel Nombre = new JLabel("CONFERENCIA");
     JLabel ID = new JLabel("ID");    
     JLabel Cupo = new JLabel("CUPO TOTAL");
@@ -43,6 +63,7 @@ public class ConferenciasIns extends JFrame {
     JLabel horaInicio  = new JLabel("INICIA");
     JLabel horaFinal  = new JLabel("FINALIZA");
     
+    //Labels para mostrar los datos de la BD
     JLabel NombreM = new JLabel("");
     JLabel IDM = new JLabel("ID");    
     JLabel CupoM = new JLabel("");
@@ -60,7 +81,7 @@ public class ConferenciasIns extends JFrame {
 
      public ConferenciasIns () {
         //titulo de la ventana
-        setTitle("Index");
+        setTitle("Mis conferencias Inscritas");
         //tamaño de la ventana
         setSize(1000,703);
         //Se podra redimencionar
@@ -74,6 +95,7 @@ public class ConferenciasIns extends JFrame {
         //Crear la interfaz
          pos = 0;
          ShowPosInfo(pos);
+         
         init();
         transparenciaButton();
         
@@ -85,20 +107,32 @@ public class ConferenciasIns extends JFrame {
         this.setLayout(null);
         BordeRedondo border = new BordeRedondo(40); // radio = 10
 
-                        
+                      
         Botones.setLayout(null);
         Botones.setBounds (175, 170, 650, 215);
         Botones.setOpaque(false);
+        
+        Borde.setLayout(null);
+        Borde.setBounds(60, 600, 100, 45);
+        Borde.setOpaque(false);
         
         Titulo.setLayout(null);
         Titulo.setBounds(10, 20, 1050, 100);
         Titulo.setOpaque(false);
         
+        //Panel Título
         Title.setBounds(320, 30, 1050, 45);
         Title.setForeground(new Color (12, 8, 12, 100));
         Title.setFont(new java.awt.Font("Segoe UI Light", 1, 25));
-       
         
+        Regresa.setIcon(new ImageIcon(photo));
+        Regresa.setBounds(0, 0, 100, 45);
+        Regresa.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+        Regresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Regresa.setBorder(border);
+        Regresa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+       
+        //Panel Botones
         Nombre.setBounds(50, 20, 150, 45);
         Nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Nombre.setForeground(new Color (12, 8, 12, 120));
@@ -113,6 +147,12 @@ public class ConferenciasIns extends JFrame {
         Precio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Precio.setForeground(new Color (12, 8, 12, 120));
         Precio.setFont(new java.awt.Font("Segoe UI Light", 1, 14));
+        
+        Fecha.setBounds(450, 20, 150, 45);
+        Fecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Fecha.setForeground(new Color (12, 8, 12, 120));
+        Fecha.setFont(new java.awt.Font("Segoe UI Light", 1, 14));
+                        
         
         NombreM.setBounds(50, 60, 150, 45);
         NombreM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -129,24 +169,35 @@ public class ConferenciasIns extends JFrame {
         PrecioM.setForeground(new Color (12, 8, 12, 100));
         PrecioM.setFont(new java.awt.Font("Segoe UI Light", 1, 14));
         
-        detalles.setBounds(430, 110, 150, 45);
+        FechaM.setBounds(450, 60, 150, 45);
+        FechaM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        FechaM.setForeground(new Color (12, 8, 12, 100));
+        FechaM.setFont(new java.awt.Font("Segoe UI Light", 1, 15));
+        
+        detalles.setIcon(new ImageIcon(expand));        
+        detalles.setBounds(430, 110, 170, 45);
         detalles.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
         detalles.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         detalles.setBorder(border);
         detalles.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
-        Anterior.setBounds(200, 145, 100, 45);
+        //Botones para mostrar anterior y siguiente
+        Anterior.setIcon(new ImageIcon(left));
+        Anterior.setBounds(265, 145, 60, 45);
         Anterior.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
         Anterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Anterior.setBorder(border);
         Anterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
-        Siguiente.setBounds(300, 145, 100, 45);
+        Siguiente.setIcon(new ImageIcon(right));
+        Siguiente.setBounds(325, 145, 60, 45);
         Siguiente.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
         Siguiente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Siguiente.setBorder(border);
         Siguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
+       
+       
+        //Agregar componentes
         Botones.add(login);
         Botones.add(detalles);
         Botones.add(Nombre);
@@ -157,27 +208,31 @@ public class ConferenciasIns extends JFrame {
         Botones.add(PrecioM);
         Botones.add(Anterior);
         Botones.add(Siguiente);
+        Botones.add(Fecha);
+        Botones.add(FechaM);
         Titulo.add(Title);
+        Borde.add(Regresa);
         getContentPane().add(Botones);
         getContentPane().add(Titulo);
         getContentPane().add(Borde);
         
+        
+        //Action Listeners
         detalles.addActionListener (
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e){
                         
-                     
+                        horaInicioM.setVisible(true);
+                        horaInicio.setVisible(true);
+                        horaFinal.setVisible(true);
+                        horaFinalM.setVisible(true);
+                        login.setVisible(true);
                         detalles.setVisible(false);
                         
                         Botones.setLayout(null);
                         Botones.setBounds (175, 170, 650, 315);
                         Botones.setOpaque(false);
-                        
-                        Fecha.setBounds(450, 20, 150, 45);
-                        Fecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                        Fecha.setForeground(new Color (12, 8, 12, 120));
-                        Fecha.setFont(new java.awt.Font("Segoe UI Light", 1, 14));
                         
                         horaInicio.setBounds(50, 100, 150, 45);
                         horaInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -189,11 +244,6 @@ public class ConferenciasIns extends JFrame {
                         horaFinal.setForeground(new Color (12, 8, 12, 120));
                         horaFinal.setFont(new java.awt.Font("Segoe UI Light", 1, 14));
                         
-                        FechaM.setBounds(450, 60, 140, 45);
-                        FechaM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                        FechaM.setForeground(new Color (12, 8, 12, 100));
-                        FechaM.setFont(new java.awt.Font("Segoe UI Light", 1, 15));
-                        
                         horaInicioM.setBounds(50, 140, 150, 45);
                         horaInicioM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                         horaInicioM.setForeground(new Color (12, 8, 12, 100));
@@ -204,19 +254,20 @@ public class ConferenciasIns extends JFrame {
                         horaFinalM.setForeground(new Color (12, 8, 12, 100));
                         horaFinalM.setFont(new java.awt.Font("Segoe UI Light", 1, 14));
                         
-                        Anterior.setBounds(200, 245, 100, 45);
+                        Anterior.setBounds(265, 245, 60, 45);
                         Anterior.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
                         Anterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                         Anterior.setBorder(border);
                         Anterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-                        Siguiente.setBounds(300, 245, 100, 45);
+                        Siguiente.setBounds(325, 245, 60, 45);
                         Siguiente.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
                         Siguiente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                         Siguiente.setBorder(border);
                         Siguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                                                
-                        login.setBounds(430, 200, 150, 45);
+                        
+                        login.setIcon(new ImageIcon(collapse));                        
+                        login.setBounds(430, 200, 170, 45);
                         login.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
                         login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                         login.setBorder(border);
@@ -225,10 +276,8 @@ public class ConferenciasIns extends JFrame {
                         Botones.add(horaInicio);
                         Botones.add(horaFinal);
                         Botones.add(login);
-                        Botones.add(Fecha);
                         Botones.add(horaInicioM);
                         Botones.add(horaFinalM);
-                        Botones.add(FechaM);
                     }
                 }
         );
@@ -243,13 +292,12 @@ public class ConferenciasIns extends JFrame {
                   else{
                       pos = new ConferenciasInsBD().BindList().size() - 1;
                       ShowPosInfo(pos);
-                      JOptionPane.showMessageDialog(null, "END");
                   }
             }
 
          });
          
-         Anterior.addActionListener(new ActionListener(){
+        Anterior.addActionListener(new ActionListener(){
         
             @Override
             public void actionPerformed(ActionEvent e){
@@ -261,20 +309,71 @@ public class ConferenciasIns extends JFrame {
                 else{
                     pos = 0;
                     ShowPosInfo(pos);
-                    JOptionPane.showMessageDialog(null, "END");
                 }
             }
         });
+       
+        login.addActionListener(new ActionListener(){
+        
+            @Override
+            public void actionPerformed(ActionEvent e){
+               horaInicioM.setVisible(false);
+               horaInicio.setVisible(false);
+               horaFinal.setVisible(false);
+               horaFinalM.setVisible(false);
+               login.setVisible(false);
+               detalles.setVisible(true);
+               Botones.setLayout(null);
+               Botones.setBounds (175, 170, 650, 215);
+               Botones.setOpaque(false);
+               Anterior.setIcon(new ImageIcon(left));
+               Anterior.setBounds(265, 145, 60, 45);
+               Anterior.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+               Anterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+               Anterior.setBorder(border);
+               Anterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+               Siguiente.setIcon(new ImageIcon(right));
+               Siguiente.setBounds(325, 145, 60, 45);
+               Siguiente.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+               Siguiente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+               Siguiente.setBorder(border);
+               Siguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                
+            }
+        });
+        
          
-      
+       Regresa.addActionListener ((ActionEvent e) -> {
+            dispose();
+            new NewIndex().setVisible(true);
+        });
         
         
     }
      
+     //Muestra Información de las conferencias 
       public void ShowPosInfo(int index){
           
           if(new ConferenciasInsBD().BindList().size() == 0){
-              JOptionPane.showMessageDialog(null, "No te has inscrito a ninguna conferencia");
+            Botones.setVisible(false);
+                             
+            NoConferences.setLayout(null);
+            NoConferences.setBounds (175, 170, 650, 215);
+            NoConferences.setOpaque(false);
+            
+            Mensaje.setBounds(95, 60, 650, 45);
+            Mensaje.setForeground(new Color (12, 8, 12, 100));
+            Mensaje.setFont(new java.awt.Font("Segoe UI Light", 1, 20));
+            
+            Imagen.setIcon(new ImageIcon(calamardo));
+            Imagen.setBounds(290, 120, 60, 45);
+            Imagen.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+            Imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            
+            NoConferences.add(Imagen);
+            NoConferences.add(Mensaje);
+            getContentPane().add(NoConferences);
               
           }else{
             IDM.setText(Integer.toString(new ConferenciasInsBD().BindList().get(index).getIdUsuario()));
@@ -321,6 +420,16 @@ public class ConferenciasIns extends JFrame {
         Siguiente.setOpaque(false);
         Siguiente.setContentAreaFilled(false);
         Siguiente.setBorderPainted(true);
+        
+        Regresa.setOpaque(false);
+        Regresa.setContentAreaFilled(false);
+        Regresa.setBorderPainted(true);
+        
+        Imagen.setOpaque(false);
+        Imagen.setContentAreaFilled(false);
+        Imagen.setBorderPainted(false);
+        
+        
     }
     
     class BordeRedondo implements Border {
