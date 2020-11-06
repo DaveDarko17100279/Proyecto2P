@@ -17,17 +17,13 @@ public class ConferenciasInsBD {
     String resultado;
     int ID;
     
-    public void Usuario (usuarioGeneral usu) {
-            Usu  = usu;
-            ID = Usu.getId();
-    }
-    
-    public ConferenciasInsBD() {
+    public ConferenciasInsBD(int id) {
+        this.ID = id;
     }
     
     public  List<conferencia> BindList(){
         try{
-           
+                      
            PreparedStatement Muestra = cn.prepareStatement("SELECT `conferencia_participante`.`ID_Usuario`"
                     + " AS ID_Participante, `conferencia`.*, `detalles_conferencia`.* "
                     + "FROM `conferencia_participante` LEFT JOIN `conferencia` ON `conferencia_participante`.`ID_Conferencia` = `conferencia`.`ID_Conferencia` LEFT JOIN `detalles_conferencia` ON `detalles_conferencia`.`ID_Conferencia` = `conferencia`.`ID_Conferencia` "

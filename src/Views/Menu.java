@@ -3,6 +3,10 @@ package Views;
 import Models.usuarioGeneral;
 import Administracion.usuarioGeneralAdmin;
 import BD.conexion;
+
+import BD.ConferenciasInsBD;
+import BD.conexion;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -72,6 +76,17 @@ public class Menu extends JFrame {
         btnCreate.addActionListener((ActionEvent e) -> {
             new CrearConferencia(id).setVisible(true);
         });
+
+        btnCreate.addActionListener((ActionEvent e) -> {
+            new CrearConferencia(id).setVisible(true);
+        });
+        
+        btnToAssist.addActionListener((ActionEvent e) -> {
+           new ConferenciasInsBD(id);
+           new ConferenciasIns(id).setVisible(true);
+        });
+        
+
         btnConfig(btnManage);
         btnConfig(btnToAssist);
         btnConfig(btnSignUp);
@@ -122,6 +137,7 @@ public class Menu extends JFrame {
                 .addComponent(btnInfo)
         );
     }
+    
     
     private void btnConfig(JButton btn) {
         btn.setOpaque(false);
