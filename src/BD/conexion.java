@@ -29,7 +29,7 @@ public class conexion {
     }
     
     //conexion a la BD
-    public Connection getConnection(){
+   static public Connection getConnection(){
         return con;
     }
     //desconectar la bd
