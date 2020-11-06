@@ -52,8 +52,6 @@ public class conferenciaBD {
         }
         return con; //retorna un array de objetos con todas las conferencias creadas por el ususario
     }
-    
-    
     public int totalConferencias(int idUsuario){//obtiene el total de conferencias creadas por un usuario
         int total = 0;
         try {
