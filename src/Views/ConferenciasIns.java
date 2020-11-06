@@ -22,18 +22,18 @@ import javax.swing.border.Border;
 
 /**
  *
- * @author Pris
+ * @author Priscila Ortega López
  */
 public class ConferenciasIns extends JFrame {
     
     //Panels
     JPanel Botones  = new RoundedPanel(30, new Color(255, 252, 255, 200));
     JPanel Titulo  = new RoundedPanel(90, new Color(255, 252, 255, 250));
-    JPanel Borde = new RoundedPanel(45, new Color(255, 252, 255, 200));
+    JPanel Borde = new RoundedPanel(45, new Color(255, 252, 255, 150));
     JPanel NoConferences = new RoundedPanel(30, new Color(255, 252, 255, 200));
     
     //Botones
-    JButton login = new Botones("MENOS");
+    JButton login = new Botones("OCULTAR");
     JButton detalles = new Botones("DETALLES");
     JButton Siguiente = new Botones();
     JButton Anterior = new Botones();
@@ -52,7 +52,7 @@ public class ConferenciasIns extends JFrame {
     
     //Título de la View
     JLabel Title = new JLabel("M I S  C O N F E R E N C I A S");
-    JLabel Mensaje = new JLabel("NO ESTAS INSCRITO A NINGUNA CONFERENCIA");
+    JLabel Mensaje = new JLabel("NO ESTÁS INSCRITO A NINGUNA CONFERENCIA");
     
     //Títulos
     JLabel Nombre = new JLabel("CONFERENCIA");
