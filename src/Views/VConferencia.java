@@ -5,6 +5,10 @@ package Views;
  * @author DaveDarko
  */
 
+
+import BD.conexion;
+import BD.conferenciaBD;
+import Models.conferencia;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -17,12 +21,20 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 
 /**
  *
@@ -30,6 +42,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VConferencia extends JFrame {
 
+    Connection cn = new conexion().getConnection();
+    
+    Object[] fila = new Object[6];
+    
     DefaultTableModel modelo = new DefaultTableModel();
     private JTable tabla = new JTable(modelo);
     private JPanel panelGeneral = new JPanel(); //******************************************************************* PANEL INFORMACIÓN
@@ -44,7 +60,7 @@ public class VConferencia extends JFrame {
     private JLabel lblCupo = new JLabel(); //**************************************************************************** Nombre
     private JLabel lblHoraInicio = new JLabel(); //**************************************************************************** Nombre
     private JLabel lblHoraFinal = new JLabel(); //**************************************************************************** Nombre
-    
+
     private JTextField txtName = new JTextField(); //**************************************************************************** Nombre
     private JTextField txtPrecio = new JTextField(); //**************************************************************************** Nombre
     private JTextField txtCupo = new JTextField(); //**************************************************************************** Nombre
@@ -53,17 +69,18 @@ public class VConferencia extends JFrame {
 
     JButton btnEditar = new JButton("Editar Conferencia");
     JButton btnEliminar = new JButton("Eliminar Conferencia");
-    
+
     public VConferencia() {
         // CONFIGURAR EL JFRAME
         setTitle("Index");
         setResizable(false);
-        setSize(800,600);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-                setBackground(new Color(0x15576B));
-
+        setBackground(new Color(0x15576B));
         
+        
+
         panelGeneral();
         panelBotones();
         table();
@@ -130,14 +147,27 @@ public class VConferencia extends JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Cupo");
         
+
+            conferenciaBD usuario = new conferenciaBD();
+            conferencia[] con = new conferencia[usuario.getConferencias(6).length];
+            for(int i = 0; i<con.length;i++){
+                con[i] = usuario.getConferencias(6)[i];
+            }
+            
+            System.out.println(con[1].getNombreConferencia());
+            System.out.println(con[1].getCupoTotal());
+            
+            for(int i = 0; i < con.length; i++){
+                fila[0] = con[i].getNombreConferencia();
+                fila[1] = String.valueOf(con[i].getPrecio());
+                fila[2] = String.valueOf(con[i].getCupoTotal());
+                fila[3] = "Hola";
+                modelo.addRow(fila); // Añade una fila al final
+            }
+
+        
         // LLENAR LA TABLA
-        Object[] fila = new Object[3];
-        for (int i = 0; i < 500; i++) {
-            fila[0] = "Nombre " + i;
-            fila[1] = "Precio " + i;
-            fila[2] = "Cupo " + i;
-            modelo.addRow(fila); // Añade una fila al final
-        }
+        
         
         JScrollPane scrollPane = new JScrollPane(tabla); //************************************************ SCROLL PABEL TABLA
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -174,6 +204,13 @@ public class VConferencia extends JFrame {
             }
         });
         
+        btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelDetalles.setVisible(false);
+                panelEditar.setVisible(true);
+            }
+        });
     }
     
     private void panelBotones(){
