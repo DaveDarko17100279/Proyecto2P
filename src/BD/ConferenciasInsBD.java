@@ -1,21 +1,36 @@
 
 package BD;
+
 import Models.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import Views.*;
+/**
+ *
+ * @author Pris
+ */
 public class ConferenciasInsBD {
+    
+    usuarioGeneral Usu = new usuarioGeneral();
     conexion con = new conexion();
     Connection cn = con.getConnection();
     String resultado;
+    int ID;
+    
+    public void Usuario (usuarioGeneral usu) {
+            Usu  = usu;
+    }
+    
     public ConferenciasInsBD() {
     }
+    
     public  List<conferencia> BindList(){
         try{
+           
            PreparedStatement Muestra = cn.prepareStatement("SELECT `conferencia_participante`.`ID_Usuario`"
                     + " AS ID_Participante, `conferencia`.*, `detalles_conferencia`.* "
-                    + "FROM `conferencia_participante` LEFT JOIN `conferencia` ON `conferencia_participante`.`ID_Conferencia` = `conferencia`.`ID_Conferencia` LEFT JOIN `detalles_conferencia` ON `detalles_conferencia`.`ID_Conferencia` = `conferencia`.`ID_Conferencia` WHERE `conferencia_participante`.`ID_Usuario` = '1' AND `conferencia`.`ID_Conferencia` = `conferencia_participante`.`ID_Conferencia` AND `detalles_conferencia`.`ID_Conferencia` = `conferencia`.`ID_Conferencia`");
+                    + "FROM `conferencia_participante` LEFT JOIN `conferencia` ON `conferencia_participante`.`ID_Conferencia` = `conferencia`.`ID_Conferencia` LEFT JOIN `detalles_conferencia` ON `detalles_conferencia`.`ID_Conferencia` = `conferencia`.`ID_Conferencia` "
+                    + "WHERE `conferencia_participante`.`ID_Usuario` = '' AND `conferencia`.`ID_Conferencia` = `conferencia_participante`.`ID_Conferencia` AND `detalles_conferencia`.`ID_Conferencia` = `conferencia`.`ID_Conferencia`");
             ResultSet rs = Muestra.executeQuery();
             List<conferencia> list = new ArrayList<conferencia>();
             while(rs.next()){
