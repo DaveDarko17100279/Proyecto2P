@@ -82,7 +82,6 @@ public class Menu extends JFrame {
         });
         
         btnToAssist.addActionListener((ActionEvent e) -> {
-           new ConferenciasInsBD(id);
            new ConferenciasIns(id).setVisible(true);
         });
         

@@ -347,7 +347,7 @@ public class ConferenciasIns extends JFrame {
          
        Regresa.addActionListener ((ActionEvent e) -> {
             dispose();
-            new NewIndex().setVisible(true);
+            new Menu(idU).setVisible(true);
         });
         
         
