@@ -17,18 +17,19 @@ public class InfoUser extends JFrame{
     private usuarioGeneralAdmin userAdmin;
     
     // Text display
-//    private final JLabel labWelcome = new JLabel("");
-//    private final JLabel labOwnConfer = new JLabel("MIS CONFERENCIAS");
-//    private final JLabel labOutsideConfer = new JLabel("OTRAS CONFERENCIAS");
-//    private final JLabel labWelcome = new JLabel("");
-//    private final JLabel labOwnConfer = new JLabel("MIS CONFERENCIAS");
-//    private final JLabel labOutsideConfer = new JLabel("OTRAS CONFERENCIAS");
-//    private final JLabel labWelcome = new JLabel("");
-//    private final JLabel labOwnConfer = new JLabel("MIS CONFERENCIAS");
-//    private final JLabel labOutsideConfer = new JLabel("OTRAS CONFERENCIAS");
-//    private final JLabel labWelcome = new JLabel("");
-//    private final JLabel labOwnConfer = new JLabel("MIS CONFERENCIAS");
-//    private final JLabel labOutsideConfer = new JLabel("OTRAS CONFERENCIAS");
+    private final JLabel labInfo = new JLabel("Información de usuario");
+    private final JLabel labxName = new JLabel("Nombre:");
+    private final JLabel labName = new JLabel("");
+    private final JLabel labPLast = new JLabel("");
+    private final JLabel labMLast = new JLabel("");
+    private final JLabel labxBirth = new JLabel("Fecha de Nacimiento: ");
+    private final JLabel labBirth = new JLabel("");
+    private final JLabel labxEmail = new JLabel("Correo Electrónico: ");
+    private final JLabel labEmail = new JLabel("");
+    private final JLabel labxTel = new JLabel("Telefono: ");
+    private final JLabel labTel = new JLabel("");
+    private final JLabel labxType = new JLabel("Tipo de usuario: ");
+    private final JLabel labType = new JLabel("");
     
     public InfoUser(int ID) {
         super();
