@@ -72,7 +72,7 @@ public class Menu extends JFrame {
         // Buttons config
         btnConfig(btnInfo);
         btnInfo.addActionListener((ActionEvent e) -> {
-//            new InfoUser(id).setVisible(true);
+            new InfoUser(id).setVisible(true);
         });
         
         btnConfig(btnCreate);
