@@ -63,7 +63,7 @@ public class Index extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e){
                         dispose();
-                       new RegistrarG().setVisible(true);
+                       new ElegirTipoUser().setVisible(true);
                     }
                 }
         );
