@@ -277,7 +277,7 @@ public class CuentaE extends JFrame {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    usuarioEmpresarial UE = new usuarioEmpresarial(Nombre.getText(), paterno.getText(), materno.getText(),sqlDate, Co.getText(), Long.parseLong(Telefono.getText(), 10), password.getText(),2, empF);
+                    usuarioEmpresarial UE = new usuarioEmpresarial(empF,Nombre.getText(), paterno.getText(), materno.getText(),sqlDate, Co.getText(), Long.parseLong(Telefono.getText(), 10), password.getText(),2);
                     new usuarioEmpresarialBD().crearUsuario(UE);
                     
                     dispose();

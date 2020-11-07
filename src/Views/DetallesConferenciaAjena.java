@@ -35,7 +35,7 @@ import javax.swing.table.TableCellRenderer;
 
 /*DETALLES DE CONFERENCIAS NO CREADAS POR EL USUARIO ACTUAL*/
 public class DetallesConferenciaAjena extends JFrame {
-    Connection con = conexion.getConnection();
+    //Connection con = conexion.getConnection();
     
     private JTable jTableEjemplo = new JTable();
     
