@@ -56,7 +56,6 @@ public class Menu extends JFrame {
         // Ventana
         this.setTitle("Savala Conferenzes");
         this.setSize(900, 600);
-//        this.setDefaultCloseOperation(HIDE_ON_CLOSE); **********************************
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -73,9 +72,9 @@ public class Menu extends JFrame {
         // Buttons config
         btnConfig(btnInfo);
         btnInfo.addActionListener((ActionEvent e) -> {
-            new CrearConferencia(id).setVisible(true);
+//            new InfoUser(id).setVisible(true);
         });
-
+        
         btnConfig(btnCreate);
         btnCreate.addActionListener((ActionEvent e) -> {
             new CrearConferencia(id).setVisible(true);
@@ -87,11 +86,13 @@ public class Menu extends JFrame {
         });
 
         btnConfig(btnManage);
-        
+        btnManage.addActionListener((ActionEvent e) -> {
+            // Llamada a administrar mis conferencias ****************************************
+        });
         
         btnConfig(btnSignUp);
-        btnToAssist.addActionListener((ActionEvent e) -> {
-           new DetallesConferenciaAjena(id).setVisible(true);
+        btnSignUp.addActionListener((ActionEvent e) -> {
+            // Llamada a Inscribirse a una conferencia ***************************************
         });
         
         // Labels config
