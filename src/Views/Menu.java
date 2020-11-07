@@ -89,7 +89,7 @@ public class Menu extends JFrame {
         btnConfig(btnManage);
         btnManage.addActionListener((ActionEvent e) -> {
             // Llamada a administrar mis conferencias ****************************************
-            new VConferencia().setVisible(true);
+            new VConferencia(id).setVisible(true);
         });
         
         btnConfig(btnSignUp);

@@ -44,8 +44,10 @@ public class VConferencia extends JFrame {
 
     Connection cn = new conexion().getConnection();
     
+    int id;
+    
     conferenciaBD usuario = new conferenciaBD();
-    conferencia[] con = new conferencia[usuario.getConferencias(6).length];
+    conferencia[] con;
     
     Object[] fila = new Object[3];
     
@@ -76,7 +78,9 @@ public class VConferencia extends JFrame {
     JButton btnEditar = new JButton("Editar Conferencia");
     JButton btnEliminar = new JButton("Eliminar Conferencia");
 
-    public VConferencia() {
+    public VConferencia(int ID) {
+        id = ID;
+        con = new conferencia[usuario.getConferencias(id).length];
         // CONFIGURAR EL JFRAME
         setTitle("Index");
         setResizable(false);
@@ -156,7 +160,7 @@ public class VConferencia extends JFrame {
         
             
             for(int i = 0; i<con.length;i++){
-                con[i] = usuario.getConferencias(6)[i];
+                con[i] = usuario.getConferencias(id)[i];
             }
             
             for(int i = 0; i < con.length; i++){
@@ -227,10 +231,10 @@ public class VConferencia extends JFrame {
                         usuario = null;
                         usuario = new conferenciaBD();
                         con = null;
-                        con = new conferencia[usuario.getConferencias(6).length];
+                        con = new conferencia[usuario.getConferencias(id).length];
                         
                         for (int i = 0; i < con.length; i++) {
-                            con[i] = usuario.getConferencias(6)[i];
+                            con[i] = usuario.getConferencias(id)[i];
                         }
                         
                         JOptionPane.showMessageDialog(null, "Eliminado con Exito");
