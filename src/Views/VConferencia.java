@@ -98,7 +98,7 @@ public class VConferencia extends JFrame {
         setResizable(false);
         setSize(800, 600);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         //setBackground(new Color(0x15576B));
         
         

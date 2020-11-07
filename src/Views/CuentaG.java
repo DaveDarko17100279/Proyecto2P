@@ -178,7 +178,7 @@ public class CuentaG extends JFrame {
         Regresa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         Regresa.addActionListener ((ActionEvent e) -> {
             dispose();
-            new NewElegirUser().setVisible(true);
+            new ElegirTipoUser().setVisible(true);
         });
         Guardar.setBounds(375, 100, 150, 45);
         Guardar.setFont(new java.awt.Font("Segoe UI Light", 1, 13));

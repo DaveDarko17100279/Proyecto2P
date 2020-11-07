@@ -1,30 +1,36 @@
 package Views;
 
+import Formatos.*;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
-public class Index extends JFrame {
+
+public class ElegirTipoUser extends JFrame {
     // Panels
     JPanel Botones  = new JPanel();
-    JPanel Titulo  = new JPanel();
-    JPanel Borde = new JPanel();
     
     // Labels
-    JLabel Title = new JLabel("CoConferencias");
+    JLabel Title = new JLabel("Seleccionar tipo de usuario");
     
     // Buttons
-    JButton login = new JButton("Iniciar sesión");
-    JButton registro = new JButton("Crear cuenta");
+    JButton emp = new JButton("Empresarial");
+    JButton gen = new JButton("General");
     
-    public Index () {
+    public ElegirTipoUser () {
         super();
         init();
     }
@@ -33,7 +39,7 @@ public class Index extends JFrame {
         Font fontTitle = new Font("Segoe UI", 0, 30);
         
         // Ventana
-        this.setTitle("CoConferencias");
+        this.setTitle("Tipo de usuario");
         this.setSize(600,420);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -47,49 +53,42 @@ public class Index extends JFrame {
         Botones.setBounds (0, 170, 600, 315);
         Botones.setOpaque(false);
         
-        Titulo.setLayout(null);
-        Titulo.setBounds(0, 20, 600, 100);
-        
-        Title.setBounds(200, 30, 600, 45);
-        Title.setForeground(new Color (12, 8, 12, 100));
+        Title.setBounds(120, 50, 600, 45);
         Title.setFont(fontTitle);
        
-        registro.setBounds(70, 10, 450, 55);
-        btnConfig(registro);
-        registro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        registro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        registro.addActionListener (
+        gen.setBounds(70, 10, 450, 55);
+        btnConfig(gen);
+        gen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        gen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        gen.addActionListener (
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e){
-                        dispose();
+                       dispose();
                        new RegistrarG().setVisible(true);
                     }
                 }
         );
         
-        login.setBounds(70, 100, 450, 55);
-        btnConfig(login);
-        login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        login.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        login.addActionListener (
+        emp.setBounds(70, 100, 450, 55);
+        btnConfig(emp);
+        emp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        emp.addActionListener (
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e){
-                        dispose();
-                       new Login().setVisible(true);
+                       
+                       dispose();
+                       new RegistrarE().setVisible(true);
                     }
                 }
         );
             
-        Botones.add(login);
-        Botones.add(registro);
-        Titulo.add(Title);
+        Botones.add(emp);
+        Botones.add(gen);
         getContentPane().add(Botones);
-        getContentPane().add(Titulo);
-        getContentPane().add(Borde);
-        
-        
+        getContentPane().add(Title);
     }
     
     private void btnConfig(JButton btn) {
@@ -97,4 +96,5 @@ public class Index extends JFrame {
         btn.setBackground(new Color(0,0,0,0));
         btn.setFont(new Font("Segoe UI", 0, 18));
     }
+    
 }

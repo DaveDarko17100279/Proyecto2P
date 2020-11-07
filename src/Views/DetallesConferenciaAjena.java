@@ -52,7 +52,7 @@ public class DetallesConferenciaAjena extends JFrame {
         setResizable(false);
         setSize(800,800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         // CONFIGURAR LA TABLA
         DefaultTableModel modelo = new DefaultTableModel();

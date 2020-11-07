@@ -10,23 +10,19 @@
  */
 package Views;
 
-import BD.usuarioEmpresarialBD;
 import BD.usuarioGeneralBD;
 import Formatos.JTextFieldHint;
-import Models.usuarioEmpresarial;
 import Models.usuarioGeneral;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -74,7 +70,7 @@ public class RegistrarG extends JFrame {
         //Localizacion
         setLocationRelativeTo(null);
         //Salir
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         Design();
         //Agregamos Fondo
         //this.setContentPane();
@@ -220,4 +216,5 @@ public class RegistrarG extends JFrame {
         Fondo.add(Registrar);
 
     }
+    
 }
