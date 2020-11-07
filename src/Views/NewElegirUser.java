@@ -94,7 +94,7 @@ public class NewElegirUser extends JFrame {
                     public void actionPerformed(ActionEvent e){
                        
                        dispose();
-                       new CuentaE().setVisible(true);
+                       new RegistrarE().setVisible(true);
                     }
                 }
         );
