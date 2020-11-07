@@ -79,7 +79,7 @@ public class NewElegirUser extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e){
                        dispose();
-                       new CuentaG().setVisible(true);
+                       new RegistrarG().setVisible(true);
                     }
                 }
         );
