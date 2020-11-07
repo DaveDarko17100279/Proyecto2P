@@ -18,10 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-/**
- *
- * @author fabian_rodriguez
- */
 
 public class Menu extends JFrame {
     // Data
@@ -82,7 +78,7 @@ public class Menu extends JFrame {
         
         btnConfig(btnToAssist);
         btnToAssist.addActionListener((ActionEvent e) -> {
-           dispose();
+           //dispose();
            new ConferenciasIns(id).setVisible(true);
         });
 
