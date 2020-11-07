@@ -12,7 +12,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
@@ -50,13 +49,14 @@ public class CuentaE extends JFrame {
     JLabel empr = new JLabel ("Empresa: ");
     JComboBox empresa = new JComboBox();
     //JButton Siguiente = new Botones(">");
-    JButton Anterior = new Botones("<");
     JButton Guardar = new Botones("GUARDAR");
     FondoPanel fondo = new FondoPanel();
     JLabel Title = new JLabel("U S U A R I O  E M P R E S E R A R I A L");
     String Empre = "";
     int empF = 0;
     java.sql.Date sqlDate;
+    JButton Regresa = new Botones();
+    Image photo  = new ImageIcon(this.getClass().getResource("/Imagenes/return1.png")).getImage();
     
 
      public CuentaE () {
@@ -210,7 +210,7 @@ public class CuentaE extends JFrame {
             if ("Medicinas Rosario".equals(Empre)) {empF = 11;}
             if ("Microsoft México".equals(Empre)) {empF = 12;}
             if ("Google México".equals(Empre)) {empF = 13;}
-            if( Nombre.getText().length() == 0 ||
+            /*if( Nombre.getText().length() == 0 ||
                 paterno.getText().length() == 0 ||
                 materno.getText().length() == 0 ||
                 nacimiento.getText().length() == 0 ||
@@ -233,26 +233,23 @@ public class CuentaE extends JFrame {
                 new usuarioEmpresarialBD().crearUsuario(UE);
             }
             dispose();
-            new NewIndex().setVisible(true);
+            new NewIndex().setVisible(true);*/
         });
         
         Botones.add(empr);
         Botones.add(empresa);
-       
-        Anterior.setBounds(375, 35, 150, 45);
-        Anterior.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
-        Anterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Anterior.setBorder(border);
-        Anterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        Anterior.addActionListener (
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e){
-                       dispose();
-                       new NewElegirUser().setVisible(true);
-                    }
-                }
-        );
+     
+        Regresa.setIcon(new ImageIcon(photo));
+        Regresa.setBounds(375, 35, 150, 45);
+        Regresa.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+        Regresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Regresa.setBorder(border);
+        Regresa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        Regresa.addActionListener ((ActionEvent e) -> {
+            dispose();
+            new NewElegirUser().setVisible(true);
+        });
+        
         Guardar.setBounds(375, 100, 150, 45);
         Guardar.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
         Guardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -261,7 +258,6 @@ public class CuentaE extends JFrame {
         Guardar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent evt){
-                
                 if(Nombre.getText().length() == 0 ||
                    paterno.getText().length() == 0 || 
                    materno.getText().length() == 0 || 
@@ -269,15 +265,27 @@ public class CuentaE extends JFrame {
                    Co.getText().length() == 0 ||
                    Telefono.getText().length() == 0 ||
                    password.getText().length() == 0 ||
-                   Empre.length() == 0) 
+                   Empre.length() == 0) { 
                    JOptionPane.showMessageDialog(null, "Rellene todos los campos del señor@ " + Nombre.getText());
                 }
-                /*else{
-                    
-                }*/
+                else{
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
+                    try {
+                        java.util.Date utilDate = format.parse(nacimiento.getText());
+                        sqlDate = new java.sql.Date(utilDate.getTime());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    usuarioEmpresarial UE = new usuarioEmpresarial(empF,Nombre.getText(), paterno.getText(), materno.getText(),sqlDate, Co.getText(), Long.parseLong(Telefono.getText(), 10), password.getText(),2);
+                    new usuarioEmpresarialBD().crearUsuario(UE);
+                    
+                    dispose();
+                    new NewIndex().setVisible(true);
+                }
+            }
         });
-        Botones.add(Anterior);
+        Botones.add(Regresa);
         Botones.add(Guardar);
         Titulo.add(Title);
         getContentPane().add(Botones);
@@ -302,9 +310,9 @@ public class CuentaE extends JFrame {
     
     public void transparenciaButton() {
         
-        Anterior.setOpaque(false);
-        Anterior.setContentAreaFilled(false);
-        Anterior.setBorderPainted(true);
+        Regresa.setOpaque(false);
+        Regresa.setContentAreaFilled(false);
+        Regresa.setBorderPainted(true);
         
         Guardar.setOpaque(false);
         Guardar.setContentAreaFilled(false);

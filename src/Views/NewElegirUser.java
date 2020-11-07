@@ -29,6 +29,8 @@ public class NewElegirUser extends JFrame {
     JButton Anterior = new Botones("<");
     FondoPanel fondo = new FondoPanel();
     JLabel Title = new JLabel("E L I G E   E L   U S U A R I O");
+    JButton Regresa = new Botones();
+    Image photo  = new ImageIcon(this.getClass().getResource("/Imagenes/return1.png")).getImage();
     
 
      public NewElegirUser () {
@@ -96,32 +98,21 @@ public class NewElegirUser extends JFrame {
                     }
                 }
         );
-            
         
-        Anterior.setBounds(225, 295, 100, 45);
-        Anterior.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
-        Anterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Anterior.setBorder(border);
-        Anterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        Anterior.addActionListener (
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e){
-                       dispose();
-                       new NewIndex().setVisible(true);
-                    }
-                }
-        );
-        
-        /*Siguiente.setBounds(300, 145, 100, 45);
-        Siguiente.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
-        Siguiente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Siguiente.setBorder(border);
-        Siguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));*/
+        Regresa.setIcon(new ImageIcon(photo));
+        Regresa.setBounds(225, 295, 100, 45);
+        Regresa.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+        Regresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Regresa.setBorder(border);
+        Regresa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        Regresa.addActionListener ((ActionEvent e) -> {
+            dispose();
+            new NewIndex().setVisible(true);
+        });
         
         Botones.add(empresarial);
         Botones.add(general);
-        Botones.add(Anterior);
+        Botones.add(Regresa);
         Titulo.add(Title);
         getContentPane().add(Botones);
         getContentPane().add(Titulo);
@@ -155,13 +146,10 @@ public class NewElegirUser extends JFrame {
         general.setContentAreaFilled(false);
         general.setBorderPainted(true);
         
-        Anterior.setOpaque(false);
-        Anterior.setContentAreaFilled(false);
-        Anterior.setBorderPainted(true);
+        Regresa.setOpaque(false);
+        Regresa.setContentAreaFilled(false);
+        Regresa.setBorderPainted(true);
         
-        /*Siguiente.setOpaque(false);
-        Siguiente.setContentAreaFilled(false);
-        Siguiente.setBorderPainted(true);*/
     }
     
     class BordeRedondo implements Border {

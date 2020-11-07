@@ -35,11 +35,13 @@ public class NewLogin extends JFrame {
     JLabel pass = new JLabel("Contraseña: ");
     JPasswordField password = new JPasswordField();
     JButton ingresar = new Botones("INGRESAR");
-    JButton Anterior = new Botones("<");
+    //JButton Anterior = new Botones("<");
     FondoPanel fondo = new FondoPanel();
     String contraseña;
     String correo2;
     JLabel Title = new JLabel("I N I C I A  S E S I O N");
+    JButton Regresa = new Botones();
+    Image photo  = new ImageIcon(this.getClass().getResource("/Imagenes/return1.png")).getImage();
     
     public NewLogin () {
         //titulo de la ventana
@@ -121,18 +123,19 @@ public class NewLogin extends JFrame {
             }
         });
        
-        Anterior.setBounds(50, 50, 100, 45);
-        Anterior.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
-        Anterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Anterior.setBorder(border);
-        Anterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        Anterior.addActionListener ((ActionEvent e) -> {
+        Regresa.setIcon(new ImageIcon(photo));
+        Regresa.setBounds(50, 50, 100, 45);
+        Regresa.setFont(new java.awt.Font("Segoe UI Light", 1, 13));
+        Regresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Regresa.setBorder(border);
+        Regresa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        Regresa.addActionListener ((ActionEvent e) -> {
             dispose();
             new NewIndex().setVisible(true);
         });
  
         Botones.add(ingresar);
-        Botones.add(Anterior);
+        Botones.add(Regresa);
         Titulo.add(Title);
         getContentPane().add(Botones);
         getContentPane().add(Titulo);
@@ -161,9 +164,9 @@ public class NewLogin extends JFrame {
         ingresar.setContentAreaFilled(false);
         ingresar.setBorderPainted(true);
         
-        Anterior.setOpaque(false);
-        Anterior.setContentAreaFilled(false);
-        Anterior.setBorderPainted(true);
+        Regresa.setOpaque(false);
+        Regresa.setContentAreaFilled(false);
+        Regresa.setBorderPainted(true);
         
     }
     
