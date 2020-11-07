@@ -124,6 +124,8 @@ public class conferenciaBD {
              sql.setInt(1,ID_u);
             salida = sql.executeQuery();
         
+            System.out.print("ID RECIBIDA EN consulatConferencia: " + ID_u);
+            
             while(salida.next())
             {
                 conf = new conferencia();
@@ -148,6 +150,7 @@ public class conferenciaBD {
         }
         return conferencias;
     }
+    
     
     public ArrayList<conferencia_participante> consultarParticipantes(int ID_c, int ID_u, boolean opc) 
     {

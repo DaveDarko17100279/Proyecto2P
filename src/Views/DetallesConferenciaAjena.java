@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,8 +41,8 @@ public class DetallesConferenciaAjena extends JFrame {
     private JTable jTableEjemplo = new JTable();
     
     public DetallesConferenciaAjena (int ID_u) {
-        init();
         this.ID_u = ID_u;
+        init();
     }
     
      private void init() {
@@ -83,8 +84,9 @@ public class DetallesConferenciaAjena extends JFrame {
         Object[] fila = new Object[4]; //Columnas
         
         conferenciaBD confe = new conferenciaBD();
+        System.out.print("ID RECIBIDA: " + ID_u);
         ArrayList<conferencia> conferencias = confe.consultarConferencia(ID_u);
-        
+     
         for(conferencia conferencia:conferencias) {//Debera ser el largo del arreglo del modelo.
            //Mostrar de la BD 
             System.out.print(String.valueOf(conferencia.getIdConferencia()));
