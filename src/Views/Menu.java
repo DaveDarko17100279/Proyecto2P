@@ -92,7 +92,7 @@ public class Menu extends JFrame {
         
         btnConfig(btnSignUp);
         btnSignUp.addActionListener((ActionEvent e) -> {
-            // Llamada a Inscribirse a una conferencia ***************************************
+           new DetallesConferenciaAjena(id).setVisible(true);
         });
         
         // Labels config
