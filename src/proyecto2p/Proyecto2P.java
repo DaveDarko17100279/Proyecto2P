@@ -7,7 +7,7 @@ import Views.ConferenciasIns;
 import Views.CrearConferencia; 
 import Views.DetallesConferenciaAjena; 
 import Views.Menu; 
-import Views.NewIndex; 
+import Views.Index; 
 import Views.VConferencia; 
 import java.sql.Connection; 
  
@@ -21,7 +21,7 @@ public class Proyecto2P {
         //new ConferenciasIns().setVisible(true); 
         //new ConferenciasIns().setVisible(true); 
          
-        new NewIndex().setVisible(true); 
+        new Index().setVisible(true); 
         //new DetallesConferenciaAjena().setVisible(true); 
  
     } 

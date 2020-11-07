@@ -258,7 +258,7 @@ public class CuentaE extends JFrame {
                     new usuarioEmpresarialBD().crearUsuario(UE);
                     
                     dispose();
-                    new NewIndex().setVisible(true);
+                    new Index().setVisible(true);
                 }
             }
         });

@@ -209,7 +209,7 @@ public class CuentaG extends JFrame {
                 new usuarioGeneralBD().crearUsuario(UG);
             }
             dispose();
-            new NewIndex().setVisible(true);
+            new Index().setVisible(true);
         });
         Botones.add(Regresa);
         Botones.add(Guardar);

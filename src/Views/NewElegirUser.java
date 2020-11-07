@@ -107,7 +107,7 @@ public class NewElegirUser extends JFrame {
         Regresa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         Regresa.addActionListener ((ActionEvent e) -> {
             dispose();
-            new NewIndex().setVisible(true);
+            new Index().setVisible(true);
         });
         
         Botones.add(empresarial);

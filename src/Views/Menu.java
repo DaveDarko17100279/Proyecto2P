@@ -2,18 +2,10 @@ package Views;
 
 import Models.usuarioGeneral;
 import Administracion.usuarioGeneralAdmin;
-import BD.conexion;
-
-import BD.ConferenciasInsBD;
-import BD.conexion;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.sql.Connection;
 import javax.swing.GroupLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;

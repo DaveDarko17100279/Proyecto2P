@@ -11,7 +11,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class NewIndex extends JFrame {
+public class Index extends JFrame {
     // Panels
     JPanel Botones  = new JPanel();
     JPanel Titulo  = new JPanel();
@@ -24,7 +24,7 @@ public class NewIndex extends JFrame {
     JButton login = new JButton("Iniciar sesión");
     JButton registro = new JButton("Crear cuenta");
     
-    public NewIndex () {
+    public Index () {
         super();
         init();
     }
@@ -40,7 +40,6 @@ public class NewIndex extends JFrame {
         this.setResizable(false);
         getContentPane().setBackground(new Color(0xACDBE5));
 
-        
         // Layout 
         this.setLayout(null);
         
@@ -80,7 +79,7 @@ public class NewIndex extends JFrame {
                     public void actionPerformed(ActionEvent e){
                        
                        dispose();
-                       new NewLogin().setVisible(true);
+                       new Login().setVisible(true);
                     }
                 }
         );
