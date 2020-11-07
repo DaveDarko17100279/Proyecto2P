@@ -1,7 +1,7 @@
 package Views;
 
 import Models.usuarioGeneral;
-import Administracion.usuarioGeneralAdmin;
+import Admin.usuarioGeneralAdmin;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;

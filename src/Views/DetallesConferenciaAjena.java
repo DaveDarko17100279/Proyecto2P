@@ -1,9 +1,9 @@
 
 package Views;
 
-import BD.conexion;
-import BD.conferenciaBD;
-import BD.usuarioGeneralBD;
+import DB.conexion;
+import DB.conferenciaBD;
+import DB.usuarioGeneralBD;
 import Models.conferencia;
 import Models.conferencia_participante;
 import Models.usuarioGeneral;

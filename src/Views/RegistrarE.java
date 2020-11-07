@@ -5,8 +5,8 @@
  */
 package Views;
 
-import BD.usuarioEmpresarialBD;
-import Formatos.JTextFieldHint;
+import DB.usuarioEmpresarialBD;
+import Styles.JTextFieldHint;
 import Models.usuarioEmpresarial;
 import java.awt.Color;
 import java.awt.Cursor;

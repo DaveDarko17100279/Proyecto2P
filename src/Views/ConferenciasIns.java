@@ -1,6 +1,6 @@
 package Views;
 
-import BD.ConferenciasInsBD;
+import DB.ConferenciasInsBD;
 import Models.conferencia;
 import java.awt.Color;
 import java.awt.Dimension;

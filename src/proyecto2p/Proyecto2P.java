@@ -1,7 +1,6 @@
 
 package proyecto2p; 
  
-import BD.*; 
 import Models.*; 
 import Views.ConferenciasIns; 
 import Views.CrearConferencia; 

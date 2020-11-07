@@ -1,6 +1,6 @@
-package Administracion;
+package Admin;
 
-import BD.conferenciaBD;
+import DB.conferenciaBD;
 import Models.conferencia;
 
 /**

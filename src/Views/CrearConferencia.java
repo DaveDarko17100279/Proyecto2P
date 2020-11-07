@@ -1,8 +1,8 @@
 package Views;
 
-import Administracion.conferenciaAdmin;
-import Administracion.usuarioGeneralAdmin;
-import Formatos.JTextFieldHint;
+import Admin.conferenciaAdmin;
+import Admin.usuarioGeneralAdmin;
+import Styles.JTextFieldHint;
 import Models.conferencia;
 import Models.usuarioGeneral;
 import java.awt.Color;

@@ -10,8 +10,8 @@
  */
 package Views;
 
-import BD.usuarioGeneralBD;
-import Formatos.JTextFieldHint;
+import DB.usuarioGeneralBD;
+import Styles.JTextFieldHint;
 import Models.usuarioGeneral;
 import java.awt.Color;
 import java.awt.Cursor;

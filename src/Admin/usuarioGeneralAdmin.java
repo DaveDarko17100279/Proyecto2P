@@ -1,6 +1,6 @@
-package Administracion;
+package Admin;
 
-import BD.usuarioGeneralBD;
+import DB.usuarioGeneralBD;
 import Models.usuarioGeneral;
 
 /**

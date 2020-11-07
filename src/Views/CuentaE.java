@@ -1,8 +1,10 @@
 package Views;
 
-import BD.usuarioEmpresarialBD;
-import BD.usuarioGeneralBD;
-import Formatos.*;
+import Styles.Botones;
+import Styles.JTextFieldHint;
+import Styles.RoundedPanel;
+import DB.usuarioEmpresarialBD;
+import DB.usuarioGeneralBD;
 import Models.*;
 import java.awt.Color;
 import java.awt.Component;

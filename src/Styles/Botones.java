@@ -1,4 +1,4 @@
-package Formatos;
+package Styles;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics;

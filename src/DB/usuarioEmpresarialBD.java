@@ -1,5 +1,5 @@
 
-package BD;
+package DB;
 import Models.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

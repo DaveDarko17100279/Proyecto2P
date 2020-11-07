@@ -3,13 +3,13 @@ package Views;
 
 
 
-import Administracion.conferenciaAdmin;
-import BD.conexion;
-import BD.conferenciaBD;
+import Admin.conferenciaAdmin;
+import DB.conexion;
+import DB.conferenciaBD;
 import Models.conferencia;
 import Models.usuarioGeneral;
 import java.awt.Color;
-import Formatos.JTextFieldHint;
+import Styles.JTextFieldHint;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;

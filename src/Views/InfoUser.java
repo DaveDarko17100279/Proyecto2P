@@ -1,6 +1,6 @@
 package Views;
 
-import Administracion.usuarioGeneralAdmin;
+import Admin.usuarioGeneralAdmin;
 import Models.usuarioGeneral;
 import java.awt.Color;
 import java.awt.Font;

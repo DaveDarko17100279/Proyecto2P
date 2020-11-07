@@ -1,5 +1,5 @@
 package Views;
-import BD.usuarioGeneralBD;
+import DB.usuarioGeneralBD;
 import Models.usuarioGeneral;
 import java.awt.Color;
 import java.awt.Cursor;
