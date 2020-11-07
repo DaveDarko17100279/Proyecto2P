@@ -143,7 +143,8 @@ public class VConferencia extends JFrame {
         panelGeneral.add(lblBienvenido2);
         
         panelDetalles.setVisible(false);
-                panelEditar.setVisible(false);
+        panelEditar.setVisible(false);
+        panelBotones.setVisible(false);
     }
     
     private void table(){
@@ -193,6 +194,7 @@ public class VConferencia extends JFrame {
                     lblHoraInicio.setText((String) con[Posicion].getHoraInicial().toString());
                     lblHoraFinal.setText((String) con[Posicion].getHoraFinalizacion().toString());
                     panelDetalles.setVisible(true);
+                    panelBotones.setVisible(true);
                 }
             }
         });
@@ -218,7 +220,8 @@ public class VConferencia extends JFrame {
                         eliminarC.setInt(1,con[Posicion].getIdConferencia());
                         //guardo el resultado en res
                         eliminarC.executeUpdate();
-
+                        
+                        modelo.removeRow(Posicion);
                         JOptionPane.showMessageDialog(null, "Eliminado con Exito");
                     } catch (SQLException ex) {
                         //verifica que se haya realizado con exito
