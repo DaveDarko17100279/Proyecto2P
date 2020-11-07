@@ -149,7 +149,7 @@ public class conferenciaBD {
         return conferencias;
     }
     
-    public ArrayList<conferencia_participante> consultarParticipantes(int ID_c, boolean opc) 
+    public ArrayList<conferencia_participante> consultarParticipantes(int ID_c, int ID_u, boolean opc) 
     {
         ArrayList<conferencia_participante> participantes = new ArrayList<>();
         ResultSet salida;
@@ -159,7 +159,7 @@ public class conferenciaBD {
             /*BUSCAR AL USUARIO ESPECIFICAMENTE EN UNA CONFERENCIA*/
             if(opc == true){
             PreparedStatement sql = cn.prepareStatement("SELECT * FROM conferencia_participante  WHERE ID_Usuario = ? AND ID_Conferencia = ?");            
-             sql.setInt(1,5);
+             sql.setInt(1,ID_u);
              sql.setInt(2,ID_c);
             salida = sql.executeQuery();
             }else{

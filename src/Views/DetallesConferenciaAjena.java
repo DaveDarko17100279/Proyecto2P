@@ -230,10 +230,10 @@ public class DetallesConferenciaAjena extends JFrame {
          /*CONSULTA PARTICIPANTES DE CONFERENCIAS Y USUARIOS*/
           //ArrayList<conferencia_participante> participantes = consultarParticipantes(ID_c, true);
                 conferenciaBD particiP = new conferenciaBD();
-                ArrayList<conferencia_participante> participantes = particiP.consultarParticipantes(ID_c, true);
+                ArrayList<conferencia_participante> participantes = particiP.consultarParticipantes(ID_c, ID_u, true);
           
                 usuarioGeneralBD user = new usuarioGeneralBD();
-                usuarioGeneral usuario = user.getUsuarioByID(5);
+                usuarioGeneral usuario = user.getUsuarioByID(ID_u);
             
           /*GENERAR CODIGO DE PARTICIPANTE*/
              boolean repetido = false;
@@ -248,7 +248,7 @@ public class DetallesConferenciaAjena extends JFrame {
                    //ArrayList<conferencia_participante> Tparticipantes = new  ArrayList<>();
               
                 conferenciaBD particip = new conferenciaBD();
-                ArrayList<conferencia_participante> Tparticipantes = particip.consultarParticipantes(ID_c, false);
+                ArrayList<conferencia_participante> Tparticipantes = particip.consultarParticipantes(ID_c, ID_u, false);
                            
                  for(conferencia_participante Tpar:Tparticipantes){
                         if(Codigo_p == Tpar.getID_CP()){
@@ -272,11 +272,11 @@ public class DetallesConferenciaAjena extends JFrame {
               
               //actualizarZenis(Zenis, 5);
               usuarioGeneralBD zen = new  usuarioGeneralBD() ;
-              zen.actualizarZenis(Zenis, 5);
+              zen.actualizarZenis(Zenis, ID_u);
               
               //InsertarParticipante(5, ID_c, Codigo_p);
               conferenciaBD inPar = new conferenciaBD();
-              inPar.InsertarParticipante(5, ID_c, Codigo_p);
+              inPar.InsertarParticipante(ID_u, ID_c, Codigo_p);
               
               JOptionPane.showMessageDialog(null, "Inscripción exitosa!!!");
           }
