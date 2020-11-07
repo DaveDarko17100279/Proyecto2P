@@ -72,24 +72,27 @@ public class Menu extends JFrame {
         
         // Buttons config
         btnConfig(btnInfo);
+        btnInfo.addActionListener((ActionEvent e) -> {
+            new CrearConferencia(id).setVisible(true);
+        });
+
         btnConfig(btnCreate);
         btnCreate.addActionListener((ActionEvent e) -> {
             new CrearConferencia(id).setVisible(true);
         });
-
-        btnCreate.addActionListener((ActionEvent e) -> {
-            new CrearConferencia(id).setVisible(true);
-        });
         
+        btnConfig(btnToAssist);
         btnToAssist.addActionListener((ActionEvent e) -> {
-           new ConferenciasInsBD(id);
            new ConferenciasIns(id).setVisible(true);
         });
-        
 
         btnConfig(btnManage);
-        btnConfig(btnToAssist);
+        
+        
         btnConfig(btnSignUp);
+        btnToAssist.addActionListener((ActionEvent e) -> {
+           new DetallesConferenciaAjena(id).setVisible(true);
+        });
         
         // Labels config
         labWelcome.setFont(fontTitle);
