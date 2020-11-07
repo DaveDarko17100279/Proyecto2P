@@ -50,7 +50,7 @@ public class InfoUser extends JFrame{
         // Ventana
         this.setTitle("Información del usuario");
         this.setSize(500, 350);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         getContentPane().setBackground(new Color(0xACDBE5));
