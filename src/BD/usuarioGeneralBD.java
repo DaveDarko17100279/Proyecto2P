@@ -1,7 +1,6 @@
 
 package BD;
 import Models.*;
-import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,13 +40,13 @@ public class usuarioGeneralBD {
             ResultSet res = buscar.executeQuery();
             while (res.next()){
                 usu = new usuarioGeneral(res.getInt("ID_Usuario"),res.getString("Nombre_s"), res.getString("Apellido_Paterno"), res.getString("Apellido_Materno"), res.getDate("Fecha_Nacimiento"), res.getString("Correo"), res.getLong("Telefono"), res.getString("Contraseña"), res.getInt("ID_TU"), res.getInt("Zenis"));
+                return usu;
             }
             System.out.println("Succesfuly");
         } catch (SQLException ex) {
             Logger.getLogger(usuarioGeneralBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return usu;//retorna un valor tipo usuarioGeneral
+        return null;  
     }
     
      public usuarioGeneral getUsuarioByID(int ID_u){//obtiene los datos de un usuario de tipo general

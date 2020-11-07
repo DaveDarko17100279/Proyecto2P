@@ -72,7 +72,7 @@ public class Menu extends JFrame {
         // Buttons config
         btnConfig(btnInfo);
         btnInfo.addActionListener((ActionEvent e) -> {
-//            new InfoUser(id).setVisible(true);
+            new InfoUser(id).setVisible(true);
         });
         
         btnConfig(btnCreate);
@@ -82,12 +82,14 @@ public class Menu extends JFrame {
         
         btnConfig(btnToAssist);
         btnToAssist.addActionListener((ActionEvent e) -> {
+           dispose();
            new ConferenciasIns(id).setVisible(true);
         });
 
         btnConfig(btnManage);
         btnManage.addActionListener((ActionEvent e) -> {
             // Llamada a administrar mis conferencias ****************************************
+            new VConferencia().setVisible(true);
         });
         
         btnConfig(btnSignUp);
