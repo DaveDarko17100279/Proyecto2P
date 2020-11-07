@@ -47,7 +47,8 @@ public class VConferencia extends JFrame {
     conferenciaBD usuario = new conferenciaBD();
     conferencia[] con = new conferencia[usuario.getConferencias(6).length];
     
-    Object[] fila = new Object[6];
+    Object[] fila = new Object[3];
+    
     
     private int Posicion;
     
@@ -182,7 +183,7 @@ public class VConferencia extends JFrame {
         // DETECTAR LA POSICIÓN SELECCIONADA
         tabla.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int Posicion = tabla.rowAtPoint(e.getPoint());
+                Posicion = tabla.rowAtPoint(e.getPoint());
                 int columna = tabla.columnAtPoint(e.getPoint());
                 if ((Posicion > -1) && (columna > -1)) {
                     panelGeneral.setVisible(false);
@@ -222,6 +223,16 @@ public class VConferencia extends JFrame {
                         eliminarC.executeUpdate();
                         
                         modelo.removeRow(Posicion);
+                        
+                        usuario = null;
+                        usuario = new conferenciaBD();
+                        con = null;
+                        con = new conferencia[usuario.getConferencias(6).length];
+                        
+                        for (int i = 0; i < con.length; i++) {
+                            con[i] = usuario.getConferencias(6)[i];
+                        }
+                        
                         JOptionPane.showMessageDialog(null, "Eliminado con Exito");
                     } catch (SQLException ex) {
                         //verifica que se haya realizado con exito
