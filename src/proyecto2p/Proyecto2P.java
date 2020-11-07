@@ -7,6 +7,7 @@ import Views.ConferenciasIns;
 import Views.Menu;
 
 import Views.ConferenciasIns;
+import Views.InfoUser;
 import Views.NewIndex;
 
 import java.sql.Connection;
