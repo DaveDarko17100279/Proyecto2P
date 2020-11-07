@@ -9,11 +9,6 @@ import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 
-/**
- *
- * @author fabian_rodriguez
- */
-
 public class InfoUser extends JFrame{
     // Data
     private final int id;

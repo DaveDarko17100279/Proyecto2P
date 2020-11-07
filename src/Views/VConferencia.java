@@ -1,15 +1,15 @@
 package Views;
 
-/**
- *
- * @author DaveDarko
- */
 
 
+
+import Administracion.conferenciaAdmin;
 import BD.conexion;
 import BD.conferenciaBD;
 import Models.conferencia;
+import Models.usuarioGeneral;
 import java.awt.Color;
+import Formatos.JTextFieldHint;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,9 +30,11 @@ import javax.swing.SwingConstants;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 
@@ -42,19 +44,22 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class VConferencia extends JFrame {
 
-    Connection cn = new conexion().getConnection();
+    private Connection cn = new conexion().getConnection();
     
-    int id;
+    private int id;
     
-    conferenciaBD usuario = new conferenciaBD();
-    conferencia[] con;
+    private conferenciaBD usuario = new conferenciaBD();
+    private conferencia[] con;
     
-    Object[] fila = new Object[3];
+    private Object[] fila = new Object[3];
     
+    private conferencia confer;
+    private usuarioGeneral user;
     
+    private int cantidad;
     private int Posicion;
     
-    DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo = new DefaultTableModel();
     private JTable tabla = new JTable(modelo);
     private JPanel panelGeneral = new JPanel(); //******************************************************************* PANEL INFORMACIÓN
     private JPanel panelDetalles = new JPanel(); //******************************************************************* PANEL INFORMACIÓN
@@ -68,15 +73,22 @@ public class VConferencia extends JFrame {
     private JLabel lblCupo = new JLabel(); //**************************************************************************** Nombre
     private JLabel lblHoraInicio = new JLabel(); //**************************************************************************** Nombre
     private JLabel lblHoraFinal = new JLabel(); //**************************************************************************** Nombre
+    private JLabel lblFecha = new JLabel(); //**************************************************************************** Nombre
 
     private JTextField txtName = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtPrecio = new JTextField(); //**************************************************************************** Nombre
+    private JTextFieldHint txtPrecio = new JTextFieldHint(); //**************************************************************************** Nombre
     private JTextField txtCupo = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtHoraInicio = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtHoraFinal = new JTextField(); //**************************************************************************** Nombre
+    private JTextFieldHint txtHourStart = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtHourFinish = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtMinStart = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtMinFinish = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtYear = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtMonth = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtDay = new JTextFieldHint(); //**************************************************************************** Nombre
 
-    JButton btnEditar = new JButton("Editar Conferencia");
-    JButton btnEliminar = new JButton("Eliminar Conferencia");
+    private JButton btnEditar = new JButton("Editar Conferencia");
+    private JButton btnEliminar = new JButton("Eliminar Conferencia");
+    private JButton btnUpdate = new JButton("Confirmar");
 
     public VConferencia(int ID) {
         id = ID;
@@ -158,21 +170,16 @@ public class VConferencia extends JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Cupo");
         
-            
-            for(int i = 0; i<con.length;i++){
+            cantidad = con.length;
+            for(int i = 0; i < cantidad; i++){
                 con[i] = usuario.getConferencias(id)[i];
             }
             
-            for(int i = 0; i < con.length; i++){
-                fila[0] = con[i].getNombreConferencia();
-                fila[1] = String.valueOf(con[i].getPrecio());
-                fila[2] = String.valueOf(con[i].getCupoTotal());
-                modelo.addRow(fila); // Añade una fila al final
-            }
+            
 
         
         // LLENAR LA TABLA
-        
+        llenarTabla();
         
         JScrollPane scrollPane = new JScrollPane(tabla); //************************************************ SCROLL PABEL TABLA
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -198,6 +205,7 @@ public class VConferencia extends JFrame {
                     lblCupo.setText((String) modelo.getValueAt(Posicion, 2));
                     lblHoraInicio.setText((String) con[Posicion].getHoraInicial().toString());
                     lblHoraFinal.setText((String) con[Posicion].getHoraFinalizacion().toString());
+                    lblFecha.setText((String) con[Posicion].getFechaPresentacion().toString());
                     panelDetalles.setVisible(true);
                     panelBotones.setVisible(true);
                 }
@@ -209,6 +217,7 @@ public class VConferencia extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 panelDetalles.setVisible(false);
                 panelEditar.setVisible(true);
+                
             }
         });
         
@@ -228,14 +237,7 @@ public class VConferencia extends JFrame {
                         
                         modelo.removeRow(Posicion);
                         
-                        usuario = null;
-                        usuario = new conferenciaBD();
-                        con = null;
-                        con = new conferencia[usuario.getConferencias(id).length];
-                        
-                        for (int i = 0; i < con.length; i++) {
-                            con[i] = usuario.getConferencias(id)[i];
-                        }
+                        actualizarTabla();
                         
                         JOptionPane.showMessageDialog(null, "Eliminado con Exito");
                     } catch (SQLException ex) {
@@ -249,6 +251,15 @@ public class VConferencia extends JFrame {
                 panelGeneral.setVisible(true);
             }
         });
+        
+        btnUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (validDatos()) {
+                    clean();
+                }
+            }
+        });
     }
     
     private void panelBotones(){
@@ -256,8 +267,7 @@ public class VConferencia extends JFrame {
         panelBotones.setBounds(500,500, 300,100);
         panelBotones.setBackground(Color.red);
         
-        
-                btnEditar.setBounds(0, 0, 300, 50);
+        btnEditar.setBounds(0, 0, 300, 50);
 
         btnEliminar.setBounds(0, 50, 300, 50);
 
@@ -298,6 +308,11 @@ public class VConferencia extends JFrame {
         lblHoraFinal.setFont(new Font("Javanese Text", Font.BOLD, 20));
         lblHoraFinal.setForeground(new Color(0x08A2C1));
         panelDetalles.add(lblHoraFinal);
+        
+        lblFecha.setBounds(110,400,200,25);
+        lblFecha.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        lblFecha.setForeground(new Color(0x08A2C1));
+        panelDetalles.add(lblFecha);
     }
     
     private void panelEditar(){
@@ -308,30 +323,69 @@ public class VConferencia extends JFrame {
         // ACOMODO DE LABELS
         Mostrar(panelEditar);
         
-        txtName.setBounds(110,20,100,25);
-        txtName.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        // Hints config
+        txtYear.setHint("AAAA");
+        txtMonth.setHint("MM");
+        txtDay.setHint("DD");
+        txtHourStart.setHint("HH");
+        txtMinStart.setHint("MM");
+        txtHourFinish.setHint("HH");
+        txtMinFinish.setHint("MM");
+        
+        Font fontText = new Font("Segoe UI Light", 1, 16);
+        
+        txtName.setBounds(110,20,180,25);
+        txtName.setFont(fontText);
         txtName.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtName);
         
-        txtPrecio.setBounds(110,95,100,25);
-        txtPrecio.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtPrecio.setBounds(110,95,180,25);
+        txtPrecio.setFont(fontText);
         txtPrecio.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtPrecio);
         
-        txtCupo.setBounds(110,170,100,25);
-        txtCupo.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtCupo.setBounds(110,170,180,25);
+        txtCupo.setFont(fontText);
         txtCupo.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtCupo);
         
-        txtHoraInicio.setBounds(145,245,145,25);
-        txtHoraInicio.setFont(new Font("Javanese Text", Font.BOLD, 20));
-        txtHoraInicio.setForeground(new Color(0x08A2C1));
-        panelEditar.add(txtHoraInicio);
+        txtHourStart.setBounds(110,245,85,25);
+        txtHourStart.setFont(fontText);
+        txtHourStart.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtHourStart);
         
-        txtHoraFinal.setBounds(140,320,150,25);
-        txtHoraFinal.setFont(new Font("Javanese Text", Font.BOLD, 20));
-        txtHoraFinal.setForeground(new Color(0x08A2C1));
-        panelEditar.add(txtHoraFinal);
+        txtMinStart.setBounds(205,245,85,25);
+        txtMinStart.setFont(fontText);
+        txtMinStart.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtMinStart);
+        
+        txtMinFinish.setBounds(110,320,85,25);
+        txtMinFinish.setFont(fontText);
+        txtMinFinish.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtMinFinish);
+        
+        txtHourFinish.setBounds(205,320,85,25);
+        txtHourFinish.setFont(fontText);
+        txtHourFinish.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtHourFinish);
+        
+        txtYear.setBounds(110,395,55,25);
+        txtYear.setFont(fontText);
+        txtYear.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtYear);
+        
+        txtMonth.setBounds(173,395,55,25);
+        txtMonth.setFont(fontText);
+        txtMonth.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtMonth);
+        
+        txtDay.setBounds(235,395,55,25);
+        txtDay.setFont(fontText);
+        txtDay.setForeground(new Color(0x08A2C1));
+        panelEditar.add(txtDay);
+        
+        btnUpdate.setBounds(25, 440, 265, 30);
+        panelEditar.add(btnUpdate);
     }
     
     private void Mostrar(JPanel pPanel){
@@ -354,17 +408,203 @@ public class VConferencia extends JFrame {
         pPanel.add(lblCupoM);
         
         
-        JLabel lblHoraInicioM = new JLabel("Hora Inicio: "); //************************************************************ Mostrar Cupo
+        JLabel lblHoraInicioM = new JLabel("Inicio: "); //************************************************************ Mostrar Cupo
         lblHoraInicioM.setBounds(25,250,200,25);
         lblHoraInicioM.setFont(new Font("Javanese Text", Font.BOLD, 20));
         lblHoraInicioM.setForeground(new Color(0x08A2C1));
         pPanel.add(lblHoraInicioM);
         
         
-        JLabel lblHoraFinalM = new JLabel("Hora Final: "); //************************************************************ Mostrar Cupo
+        JLabel lblHoraFinalM = new JLabel("Final: "); //************************************************************ Mostrar Cupo
         lblHoraFinalM.setBounds(25,325,200,25);
         lblHoraFinalM.setFont(new Font("Javanese Text", Font.BOLD, 20));
         lblHoraFinalM.setForeground(new Color(0x08A2C1));
         pPanel.add(lblHoraFinalM);
+        
+        JLabel lblFechaM = new JLabel("Fecha: "); //************************************************************ Mostrar Cupo
+        lblFechaM.setBounds(25,400,300,25);
+        lblFechaM.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        lblFechaM.setForeground(new Color(0x08A2C1));
+        pPanel.add(lblFechaM);
+    }
+    
+    private boolean validDatos() {
+        String name;
+        int cupo;
+        int price;
+        boolean costo;
+        String strDate;
+        Date date;
+        String strTimeStart;
+        Time timeStart;
+        String strTimeFinish;
+        Time timeFinish;
+        int year;
+        int month;
+        int day;
+        int hourStart;
+        int minStart;
+        int hourFinish;
+        int minFinish;
+        
+        if(
+                txtName.getText().isEmpty() || 
+                txtCupo.getText().isEmpty() || 
+                txtPrecio.getText().isEmpty() ||
+                txtYear.getText().isEmpty() ||
+                txtMonth.getText().isEmpty() ||
+                txtDay.getText().isEmpty() ||
+                txtHourStart.getText().isEmpty() ||
+                txtMinStart.getText().isEmpty() ||
+                txtHourFinish.getText().isEmpty() ||
+                txtMinFinish.getText().isEmpty()) 
+        {
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos");
+            return false;
+        }
+        
+        name = txtName.getText();
+        
+        try{
+            cupo = Integer.parseInt(txtCupo.getText());
+            price = Integer.parseInt(txtPrecio.getText());
+            year = Integer.parseInt(txtYear.getText());
+            month = Integer.parseInt(txtMonth.getText());
+            day = Integer.parseInt(txtDay.getText());
+            hourStart = Integer.parseInt(txtHourStart.getText());
+            minStart = Integer.parseInt(txtMinStart.getText());
+            hourFinish = Integer.parseInt(txtHourFinish.getText());
+            minFinish = Integer.parseInt(txtMinFinish.getText());
+        } catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(null, "Datos numericos invalidos");
+            return false; 
+        }
+        
+        if(cupo <= 0) {
+            JOptionPane.showMessageDialog(null, "Cupo debe ser mayor a 0");
+            return false;
+        }
+        
+        if(price < 0) {
+            JOptionPane.showMessageDialog(null, "Precio debe ser igual o mayor a 0");
+            return false;
+        }
+        
+        costo = price != 0;
+        
+        if(year < 2020) {
+            JOptionPane.showMessageDialog(null, "Imposible viajar en el tiempo");
+            return false;
+        }
+        
+        if(month > 12 || month == 0) {
+            JOptionPane.showMessageDialog(null, "Formato de mes invalido");
+            return false;
+        }
+        
+        if(day > 30 || day == 0) {
+            JOptionPane.showMessageDialog(null, "Formato de dia invalido");
+            return false;
+        }
+        
+        strDate = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day);
+        
+        date = Date.valueOf(strDate);
+        
+        if(hourStart > 23 || hourStart < 0 || minStart > 59|| minStart < 0) {
+            JOptionPane.showMessageDialog(null, "Formato de hora de inicio invalido");
+            return false;
+        }
+        
+        if(hourFinish > 23 || minFinish > 59) {
+            JOptionPane.showMessageDialog(null, "Formato de hora de finalización invalido");
+            return false;
+        }
+        
+        strTimeStart = Integer.toString(hourStart) + ":" + Integer.toString(minStart) + ":00";
+        strTimeFinish = Integer.toString(hourFinish) + ":" + Integer.toString(minFinish) + ":00";
+        
+        timeStart = Time.valueOf(strTimeStart);
+        timeFinish = Time.valueOf(strTimeFinish);
+        
+        System.out.println(date + " " + timeStart + " " + timeFinish);
+       
+        try {
+            PreparedStatement actualizarC = cn.prepareStatement(
+                    "UPDATE conferencia SET Nombre_Conferencia = ?,"
+                    + " Cupo_Total = ?, Precio = ? WHERE ID_Conferencia = ?");
+            actualizarC.setString(1, name);
+            actualizarC.setInt(2, cupo);
+            actualizarC.setInt(3, price);
+            actualizarC.setInt(4, con[Posicion].getIdConferencia());
+
+            actualizarC.executeUpdate();
+
+            PreparedStatement actualizarDC = cn.prepareStatement(
+                    "UPDATE detalles_conferencia SET Fecha_Presentacion = ?,"
+                    + "Hora_Inicial = ?, Hora_Finalizacion = ?  WHERE ID_Conferencia = ?");
+            actualizarDC.setDate(1, date);
+            actualizarDC.setTime(2, timeStart);
+            actualizarDC.setTime(3, timeFinish);
+            actualizarDC.setInt(4, con[Posicion].getIdConferencia());
+            actualizarDC.executeUpdate();
+            
+            // Eliminar Registros
+            while(cantidad != 0){
+                modelo.removeRow(cantidad - 1);
+                cantidad -= 1;
+            }
+            
+            actualizarTabla();
+            llenarTabla();
+            
+        } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Se quebró u.u");
+        }
+        
+
+        
+                                                        
+        
+        if(conferenciaAdmin.agregar(confer))
+            JOptionPane.showMessageDialog(null, "Conferencia agregada con exito");
+        
+        return true;
+    }
+    
+    private void clean() {
+        txtName.setText("");
+        txtCupo.setText("");
+        txtPrecio.setText("");
+        txtYear.setText("");
+        txtMonth.setText("");
+        txtDay.setText("");
+        txtHourStart.setText("");
+        txtMinStart.setText("");
+        txtHourFinish.setText("");
+        txtMinFinish.setText("");
+    }
+
+    
+    private void actualizarTabla(){
+        usuario = null;
+        usuario = new conferenciaBD();
+        con = null;
+        con = new conferencia[usuario.getConferencias(id).length];
+        cantidad = con.length;
+        for (int i = 0; i < con.length; i++) {
+            con[i] = usuario.getConferencias(id)[i];
+        }
+    }
+    
+    private void llenarTabla(){
+        for(int i = 0; i < con.length; i++){
+                fila[0] = con[i].getNombreConferencia();
+                fila[1] = String.valueOf(con[i].getPrecio());
+                fila[2] = String.valueOf(con[i].getCupoTotal());
+                modelo.addRow(fila); // Añade una fila al final
+            }
     }
 }
+
+
