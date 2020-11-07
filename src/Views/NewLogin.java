@@ -118,8 +118,22 @@ public class NewLogin extends JFrame {
               
                 usuarioGeneral UG = new usuarioGeneral();
                 UG = new usuarioGeneralBD().getUsuario(correo2, contraseña);
-                //agregar view de menu con el usuario
-                new Menu(UG.getId()).setVisible(true);
+                    try {
+                        if (UG.equals(null)){
+                        JOptionPane.showMessageDialog(null, "No estas registrado aun :( ");
+                    }
+                    else {
+                        //agregar view de menu con el usuario
+                        new Menu(UG.getId()).setVisible(true);
+                    }
+                }
+                catch(java.lang.NullPointerException ex){
+                    JOptionPane.showMessageDialog(null, "No estas registrado aun :(" );
+                }
+                
+                
+                
+                
             }
         });
        

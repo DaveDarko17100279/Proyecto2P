@@ -120,8 +120,8 @@ public class conferenciaBD {
         conferencia conf;
         try 
         {
-            PreparedStatement sql = cn.prepareStatement("SELECT conferencia.ID_Conferencia, conferencia.ID_Usuario, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion FROM conferencia INNER JOIN detalles_conferencia ON conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia WHERE conferencia.ID_Usuario != ?");            
-             sql.setInt(1,ID_u);
+            PreparedStatement sql = cn.prepareStatement("SELECT conferencia.ID_Conferencia, conferencia.ID_Usuario, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion FROM conferencia INNER JOIN detalles_conferencia ON conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia WHERE conferencia.ID_Usuario != ?"); 
+            sql.setInt(1,ID_u);
             salida = sql.executeQuery();
         
             System.out.print("ID RECIBIDA EN consulatConferencia: " + ID_u);
@@ -139,7 +139,7 @@ public class conferenciaBD {
                 conf.setHoraFinalizacion(salida.getTime("detalles_conferencia.Hora_Finalizacion"));
                // conf.setCosto(salida.getBoolean("conferencia.Costo"));
                
-                 System.out.println(salida.next());
+                 //System.out.println(salida.next());
                  conferencias.add(conf);
                 System.out.println("Agregado");
             }
