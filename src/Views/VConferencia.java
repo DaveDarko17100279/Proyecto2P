@@ -99,7 +99,7 @@ public class VConferencia extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBackground(new Color(0x15576B));
+        //setBackground(new Color(0x15576B));
         
         
 
@@ -182,8 +182,8 @@ public class VConferencia extends JFrame {
         llenarTabla();
         
         JScrollPane scrollPane = new JScrollPane(tabla); //************************************************ SCROLL PABEL TABLA
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(5, 5, 500, 590);
         contentPane.setPreferredSize(new Dimension(800, 600));
         contentPane.setBackground(new Color(0x15576B));
@@ -224,27 +224,10 @@ public class VConferencia extends JFrame {
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                        PreparedStatement eliminarD = cn.prepareStatement("DELETE FROM detalles_conferencia WHERE ID_Conferencia = ?");
-                        eliminarD.setInt(1,con[Posicion].getIdConferencia());
-                        //guardo el resultado en res
-                        eliminarD.executeUpdate();
-                        
-                        PreparedStatement eliminarC = cn.prepareStatement("DELETE FROM conferencia WHERE ID_Conferencia = ?");
-                        eliminarC.setInt(1,con[Posicion].getIdConferencia());
-                        //guardo el resultado en res
-                        eliminarC.executeUpdate();
-                        
-                        modelo.removeRow(Posicion);
-                        
-                        actualizarTabla();
-                        
-                        JOptionPane.showMessageDialog(null, "Eliminado con Exito");
-                    } catch (SQLException ex) {
-                        //verifica que se haya realizado con exito
-                        JOptionPane.showMessageDialog(null, "Algo salio mal al guardar los datos");
-                    }
-                
+                if (usuario.eliminarConferencias(con[Posicion].getIdConferencia())) {
+                    modelo.removeRow(Posicion);
+                    actualizarTabla();
+                }
                 panelDetalles.setVisible(false);
                 panelEditar.setVisible(false);
                 panelBotones.setVisible(false);
@@ -264,12 +247,14 @@ public class VConferencia extends JFrame {
     
     private void panelBotones(){
         panelBotones.setLayout(null);
-        panelBotones.setBounds(500,500, 300,100);
-        panelBotones.setBackground(Color.red);
+        panelBotones.setBounds(500,490, 300,100);
+        panelBotones.setBackground(new Color(0x3F7383));
+        btnConfig(btnEditar);
+        btnConfig(btnEliminar);
         
-        btnEditar.setBounds(0, 0, 300, 50);
+        btnEditar.setBounds(5, 0, 300, 45);
 
-        btnEliminar.setBounds(0, 50, 300, 50);
+        btnEliminar.setBounds(5, 50, 300, 45);
 
         panelBotones.add(btnEditar);
         panelBotones.add(btnEliminar);
@@ -359,12 +344,12 @@ public class VConferencia extends JFrame {
         txtMinStart.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtMinStart);
         
-        txtMinFinish.setBounds(110,320,85,25);
+        txtMinFinish.setBounds(205,320,85,25);
         txtMinFinish.setFont(fontText);
         txtMinFinish.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtMinFinish);
         
-        txtHourFinish.setBounds(205,320,85,25);
+        txtHourFinish.setBounds(110,320,85,25);
         txtHourFinish.setFont(fontText);
         txtHourFinish.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtHourFinish);
@@ -385,6 +370,7 @@ public class VConferencia extends JFrame {
         panelEditar.add(txtDay);
         
         btnUpdate.setBounds(25, 440, 265, 30);
+        btnUpdate.setBackground(new Color(0x3F7383));
         panelEditar.add(btnUpdate);
     }
     
@@ -528,27 +514,10 @@ public class VConferencia extends JFrame {
         timeFinish = Time.valueOf(strTimeFinish);
         
         System.out.println(date + " " + timeStart + " " + timeFinish);
-       
-        try {
-            PreparedStatement actualizarC = cn.prepareStatement(
-                    "UPDATE conferencia SET Nombre_Conferencia = ?,"
-                    + " Cupo_Total = ?, Precio = ? WHERE ID_Conferencia = ?");
-            actualizarC.setString(1, name);
-            actualizarC.setInt(2, cupo);
-            actualizarC.setInt(3, price);
-            actualizarC.setInt(4, con[Posicion].getIdConferencia());
+        
+        confer = new conferencia(con[Posicion].getIdConferencia(), name, cupo, price, costo, date, timeStart, timeFinish);
 
-            actualizarC.executeUpdate();
-
-            PreparedStatement actualizarDC = cn.prepareStatement(
-                    "UPDATE detalles_conferencia SET Fecha_Presentacion = ?,"
-                    + "Hora_Inicial = ?, Hora_Finalizacion = ?  WHERE ID_Conferencia = ?");
-            actualizarDC.setDate(1, date);
-            actualizarDC.setTime(2, timeStart);
-            actualizarDC.setTime(3, timeFinish);
-            actualizarDC.setInt(4, con[Posicion].getIdConferencia());
-            actualizarDC.executeUpdate();
-            
+        if(usuario.actualizarConferencia(confer)){
             // Eliminar Registros
             while(cantidad != 0){
                 modelo.removeRow(cantidad - 1);
@@ -557,17 +526,8 @@ public class VConferencia extends JFrame {
             
             actualizarTabla();
             llenarTabla();
-            
-        } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Se quebró u.u");
         }
-        
 
-        
-                                                        
-        
-        if(conferenciaAdmin.agregar(confer))
-            JOptionPane.showMessageDialog(null, "Conferencia agregada con exito");
         
         return true;
     }
@@ -604,6 +564,12 @@ public class VConferencia extends JFrame {
                 fila[2] = String.valueOf(con[i].getCupoTotal());
                 modelo.addRow(fila); // Añade una fila al final
             }
+    }
+    
+    private void btnConfig(JButton btn) {
+        btn.setOpaque(false);
+        btn.setBackground(new Color(0,0,0,0));
+        btn.setFont(new Font("Segoe UI", 0, 18));
     }
 }
 
