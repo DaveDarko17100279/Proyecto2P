@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 public class conferenciaBD {
     conexion con = new conexion();
     Connection cn = conexion.getConnection();
@@ -35,6 +36,36 @@ public class conferenciaBD {
         }
     }
     
+    public boolean actualizarConferencia(conferencia confe){//inserta en la base de datos los principales datos de una conferencia
+        boolean result = false;
+        try {
+            PreparedStatement actualizarC = cn.prepareStatement(
+                    "UPDATE conferencia SET Nombre_Conferencia = ?,"
+                    + " Cupo_Total = ?, Precio = ? WHERE ID_Conferencia = ?");
+            actualizarC.setString(1, confe.getNombreConferencia());
+            actualizarC.setInt(2, confe.getCupoTotal());
+            actualizarC.setInt(3, confe.getPrecio());
+            actualizarC.setInt(4, confe.getIdUsuario());
+
+            actualizarC.executeUpdate();
+
+            PreparedStatement actualizarDC = cn.prepareStatement(
+                    "UPDATE detalles_conferencia SET Fecha_Presentacion = ?,"
+                    + "Hora_Inicial = ?, Hora_Finalizacion = ?  WHERE ID_Conferencia = ?");
+            actualizarDC.setDate(1, confe.getFechaPresentacion());
+            actualizarDC.setTime(2, confe.getHoraInicial());
+            actualizarDC.setTime(3, confe.getHoraFinalizacion());
+            actualizarDC.setInt(4, confe.getIdUsuario());
+            actualizarDC.executeUpdate();
+            
+            result = true;
+            
+        } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "No se pudo actualizar");
+        }
+        return result;
+    }
+    
     public conferencia[] getConferencias(int idUsuario){//consigue todas las conferencias creadas por un usuario
         conferencia[] con = new conferencia[totalConferencias(idUsuario)];
         int x = 0;
@@ -52,6 +83,28 @@ public class conferenciaBD {
         }
         return con; //retorna un array de objetos con todas las conferencias creadas por el ususario
     }
+    
+    public boolean eliminarConferencias(int IDConferencia){//obtiene el total de conferencias creadas por un usuario
+        boolean result = false;
+        try {
+            PreparedStatement eliminarD = cn.prepareStatement("DELETE FROM detalles_conferencia WHERE ID_Conferencia = ?");
+            eliminarD.setInt(1, IDConferencia);
+            //guardo el resultado en res
+            eliminarD.executeUpdate();
+
+            PreparedStatement eliminarC = cn.prepareStatement("DELETE FROM conferencia WHERE ID_Conferencia = ?");
+            eliminarC.setInt(1, IDConferencia);
+            //guardo el resultado en res
+            eliminarC.executeUpdate();
+
+            result = true;
+        } catch (SQLException ex) {
+            //verifica que se haya realizado con exito
+            JOptionPane.showMessageDialog(null, "Algo salio mal al guardar los datos");
+        }
+        return true;
+    }
+    
     public int totalConferencias(int idUsuario){//obtiene el total de conferencias creadas por un usuario
         int total = 0;
         try {

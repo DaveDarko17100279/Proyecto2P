@@ -224,27 +224,10 @@ public class VConferencia extends JFrame {
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                        PreparedStatement eliminarD = cn.prepareStatement("DELETE FROM detalles_conferencia WHERE ID_Conferencia = ?");
-                        eliminarD.setInt(1,con[Posicion].getIdConferencia());
-                        //guardo el resultado en res
-                        eliminarD.executeUpdate();
-                        
-                        PreparedStatement eliminarC = cn.prepareStatement("DELETE FROM conferencia WHERE ID_Conferencia = ?");
-                        eliminarC.setInt(1,con[Posicion].getIdConferencia());
-                        //guardo el resultado en res
-                        eliminarC.executeUpdate();
-                        
-                        modelo.removeRow(Posicion);
-                        
-                        actualizarTabla();
-                        
-                        JOptionPane.showMessageDialog(null, "Eliminado con Exito");
-                    } catch (SQLException ex) {
-                        //verifica que se haya realizado con exito
-                        JOptionPane.showMessageDialog(null, "Algo salio mal al guardar los datos");
-                    }
-                
+                if (usuario.eliminarConferencias(con[Posicion].getIdConferencia())) {
+                    modelo.removeRow(Posicion);
+                    actualizarTabla();
+                }
                 panelDetalles.setVisible(false);
                 panelEditar.setVisible(false);
                 panelBotones.setVisible(false);
@@ -528,27 +511,10 @@ public class VConferencia extends JFrame {
         timeFinish = Time.valueOf(strTimeFinish);
         
         System.out.println(date + " " + timeStart + " " + timeFinish);
-       
-        try {
-            PreparedStatement actualizarC = cn.prepareStatement(
-                    "UPDATE conferencia SET Nombre_Conferencia = ?,"
-                    + " Cupo_Total = ?, Precio = ? WHERE ID_Conferencia = ?");
-            actualizarC.setString(1, name);
-            actualizarC.setInt(2, cupo);
-            actualizarC.setInt(3, price);
-            actualizarC.setInt(4, con[Posicion].getIdConferencia());
+        
+        confer = new conferencia(con[Posicion].getIdConferencia(), name, cupo, price, costo, date, timeStart, timeFinish);
 
-            actualizarC.executeUpdate();
-
-            PreparedStatement actualizarDC = cn.prepareStatement(
-                    "UPDATE detalles_conferencia SET Fecha_Presentacion = ?,"
-                    + "Hora_Inicial = ?, Hora_Finalizacion = ?  WHERE ID_Conferencia = ?");
-            actualizarDC.setDate(1, date);
-            actualizarDC.setTime(2, timeStart);
-            actualizarDC.setTime(3, timeFinish);
-            actualizarDC.setInt(4, con[Posicion].getIdConferencia());
-            actualizarDC.executeUpdate();
-            
+        if(usuario.actualizarConferencia(confer)){
             // Eliminar Registros
             while(cantidad != 0){
                 modelo.removeRow(cantidad - 1);
@@ -557,17 +523,8 @@ public class VConferencia extends JFrame {
             
             actualizarTabla();
             llenarTabla();
-            
-        } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Se quebró u.u");
         }
-        
 
-        
-                                                        
-        
-        if(conferenciaAdmin.agregar(confer))
-            JOptionPane.showMessageDialog(null, "Conferencia agregada con exito");
         
         return true;
     }
