@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 public class usuarioGeneralBD {
     conexion con = new conexion();
-    Connection cn = con.getConnection();
+    Connection cn = conexion.getConnection();
     String resultado;
     public usuarioGeneralBD() {
     }

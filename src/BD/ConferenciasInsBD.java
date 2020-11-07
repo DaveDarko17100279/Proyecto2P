@@ -13,7 +13,7 @@ public class ConferenciasInsBD {
     
     usuarioGeneral Usu = new usuarioGeneral();
     conexion con = new conexion();
-    Connection cn = con.getConnection();
+    Connection cn = conexion.getConnection();
     String resultado;
     int ID;
     
