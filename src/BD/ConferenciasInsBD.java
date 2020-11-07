@@ -5,10 +5,7 @@ import Models.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-/**
- *
- * @author Pris
- */
+
 public class ConferenciasInsBD {
     
     usuarioGeneral Usu = new usuarioGeneral();
@@ -21,7 +18,7 @@ public class ConferenciasInsBD {
         this.ID = id;
     }
     
-    public  List<conferencia> BindList(){
+    public  ArrayList<conferencia> getConferenciasIns(){
         try{
                       
            PreparedStatement Muestra = cn.prepareStatement("SELECT `conferencia_participante`.`ID_Usuario`"
@@ -30,16 +27,18 @@ public class ConferenciasInsBD {
                     + "WHERE `conferencia_participante`.`ID_Usuario` = ? AND `conferencia`.`ID_Conferencia` = `conferencia_participante`.`ID_Conferencia` AND `detalles_conferencia`.`ID_Conferencia` = `conferencia`.`ID_Conferencia`");
             Muestra.setInt(1, ID);
             ResultSet rs = Muestra.executeQuery();
-             List<conferencia> list = new ArrayList<conferencia>();
+             ArrayList<conferencia> list = new ArrayList<conferencia>();
              while(rs.next()){
-                conferencia u = new conferencia(Integer.parseInt(rs.getString("ID_Participante")),
-                                                 rs.getString("Nombre_Conferencia"),
+                conferencia u = new conferencia(
+                                                 Integer.parseInt(rs.getString("ID_Conferencia")),
+                                                 rs.getString("Nombre_Conferencia"),                        
                                                  Integer.parseInt(rs.getString("Cupo_Total")),
                                                  Integer.parseInt(rs.getString("Precio")),
-                                                 rs.getBoolean("Costo"),
                                                  rs.getDate("Fecha_Presentacion"),
                                                  rs.getTime("Hora_Inicial"),
                                                  rs.getTime("Hora_Finalizacion")
+                                                 //Integer.parseInt(rs.getString("ID_Participante")),
+                                                 //rs.getBoolean("Costo")
                  );
                   list.add(u);
              }
