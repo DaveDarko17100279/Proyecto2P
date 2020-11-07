@@ -113,7 +113,7 @@ public class conferenciaBD {
         }
     }
     
-    public ArrayList<conferencia> consultarConferencia() 
+    public ArrayList<conferencia> consultarConferencia(int ID_u) 
     {
         ArrayList<conferencia> conferencias = new ArrayList<>();
         ResultSet salida;
@@ -121,7 +121,7 @@ public class conferenciaBD {
         try 
         {
             PreparedStatement sql = cn.prepareStatement("SELECT conferencia.ID_Conferencia, conferencia.ID_Usuario, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion FROM conferencia INNER JOIN detalles_conferencia ON conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia WHERE conferencia.ID_Usuario != ?");            
-             sql.setInt(1,5);
+             sql.setInt(1,ID_u);
             salida = sql.executeQuery();
         
             while(salida.next())

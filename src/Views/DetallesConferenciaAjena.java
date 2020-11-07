@@ -83,7 +83,7 @@ public class DetallesConferenciaAjena extends JFrame {
         Object[] fila = new Object[4]; //Columnas
         
         conferenciaBD confe = new conferenciaBD();
-        ArrayList<conferencia> conferencias = confe.consultarConferencia();
+        ArrayList<conferencia> conferencias = confe.consultarConferencia(ID_u);
         
         for(conferencia conferencia:conferencias) {//Debera ser el largo del arreglo del modelo.
            //Mostrar de la BD 
