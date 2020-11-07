@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class conexion {
-     private static Connection con = null;
+    private static Connection con = null;
     private static final String driver ="com.mysql.jdbc.Driver";
     private static final String user = "root";
     private static final String password = "";
@@ -24,12 +24,12 @@ public class conexion {
             System.out.println("Error al cargar el Driver");
         }
         catch (SQLException ex) {
-            System.out.println("Error de conexión DB");
+            System.out.println("Error de conexión DB por "+ ex);
         }
     }
     
     //conexion a la BD
-   static public Connection getConnection(){
+    public Connection getConnection(){
         return con;
     }
     //desconectar la bd
