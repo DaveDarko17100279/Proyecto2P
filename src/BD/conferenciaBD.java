@@ -2,6 +2,7 @@
 package BD;
 import Models.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class conferenciaBD {
@@ -39,36 +40,17 @@ public class conferenciaBD {
         int x = 0;
         boolean costo;
         try {
-            PreparedStatement buscar = cn.prepareStatement("select * from conferencia where ID_Usuario = ? ");
+            PreparedStatement buscar = cn.prepareStatement("select conferencia.ID_Conferencia, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion from conferencia INNER JOIN detalles_conferencia on conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia where conferencia.ID_Usuario = ?");
             buscar.setInt(1, idUsuario);
             ResultSet res = buscar.executeQuery();
             while(res.next()){
-                System.out.println("Hola 2");
-                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),getDetalle(res.getInt("ID_Conferencia")).getFechaPresentacion(), getDetalle(res.getInt("ID_Conferencia")).getHoraInicial(), getDetalle(res.getInt("ID_Conferencia")).getHoraFinalizacion());
+                con[x] = new conferencia (res.getInt("ID_Conferencia"), res.getString("Nombre_Conferencia"), res.getInt("Cupo_Total"), res.getInt("Precio"),res.getDate("Fecha_Presentacion"), res.getTime("Hora_Inicial"), res.getTime("Hora_Finalizacion"));
                 x++;
             }
         } catch (SQLException ex) {
             Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Hola");
         }
         return con; //retorna un array de objetos con todas las conferencias creadas por el ususario
-    }
-    
-    public conferencia getDetalle(int idConferencia){
-        conferencia con = new conferencia();
-        try {
-            PreparedStatement buscar = cn.prepareStatement("select * from detalle_conferencias where ID_Conferencia = ? ");
-            buscar.setInt(1, idConferencia);
-            ResultSet res = buscar.executeQuery();
-            while(res.next()){
-                System.out.println("Hola 2");
-                con = new conferencia (res.getInt("ID_Conferencia"), res.getDate("Fecha_Presentacion"), res.getTime("Hora_Inicial"), res.getTime("Hora_Finalizacion"));
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return con;
     }
     public int totalConferencias(int idUsuario){//obtiene el total de conferencias creadas por un usuario
         int total = 0;
@@ -128,6 +110,95 @@ public class conferenciaBD {
             insertar.setTime(4, confe.getHoraFinalizacion());
         } catch (SQLException ex) {
             Logger.getLogger(conferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public ArrayList<conferencia> consultarConferencia() 
+    {
+        ArrayList<conferencia> conferencias = new ArrayList<>();
+        ResultSet salida;
+        conferencia conf;
+        try 
+        {
+            PreparedStatement sql = cn.prepareStatement("SELECT conferencia.ID_Conferencia, conferencia.ID_Usuario, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion FROM conferencia INNER JOIN detalles_conferencia ON conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia WHERE conferencia.ID_Usuario != ?");            
+             sql.setInt(1,5);
+            salida = sql.executeQuery();
+        
+            while(salida.next())
+            {
+                conf = new conferencia();
+                conf.setIdUsuario(salida.getInt("conferencia.ID_Usuario"));
+                conf.setIdConferencia(salida.getInt("conferencia.ID_Conferencia"));
+                conf.setNombreConferencia(salida.getString("conferencia.Nombre_Conferencia"));
+                conf.setCupoTotal(salida.getInt("conferencia.Cupo_Total"));
+                conf.setPrecio(salida.getInt("conferencia.Precio"));
+                conf.setFechaPresentacion(salida.getDate("detalles_conferencia.Fecha_Presentacion"));
+                conf.setHoraInicial(salida.getTime("detalles_conferencia.Hora_Inicial"));
+                conf.setHoraFinalizacion(salida.getTime("detalles_conferencia.Hora_Finalizacion"));
+               // conf.setCosto(salida.getBoolean("conferencia.Costo"));
+               
+                 System.out.println(salida.next());
+                 conferencias.add(conf);
+                System.out.println("Agregado");
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            
+        }
+        return conferencias;
+    }
+    
+    public ArrayList<conferencia_participante> consultarParticipantes(int ID_c, boolean opc) 
+    {
+        ArrayList<conferencia_participante> participantes = new ArrayList<>();
+        ResultSet salida;
+        conferencia_participante part;
+        try 
+        {
+            /*BUSCAR AL USUARIO ESPECIFICAMENTE EN UNA CONFERENCIA*/
+            if(opc == true){
+            PreparedStatement sql = cn.prepareStatement("SELECT * FROM conferencia_participante  WHERE ID_Usuario = ? AND ID_Conferencia = ?");            
+             sql.setInt(1,5);
+             sql.setInt(2,ID_c);
+            salida = sql.executeQuery();
+            }else{
+            /*BUSCAR TODOS LOS USUARIO PARTICIPANTES*/
+             PreparedStatement sql = cn.prepareStatement("SELECT * FROM conferencia_participante");            
+             //sql.setInt(1,5);
+             //sql.setInt(2,ID_c);
+             salida = sql.executeQuery();
+            }
+            while(salida.next())
+            {
+                part = new conferencia_participante();
+                part.setID_Usuario(salida.getInt("ID_Usuario"));
+                part.setID_Conferencia(salida.getInt("ID_Conferencia"));
+                part.setCodigo_Participante(salida.getInt("Codigo_Participante"));
+               
+                participantes.add(part);
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            
+        }
+        return participantes;
+    }
+    
+    public void InsertarParticipante(int ID_u, int ID_c, int Codigo_p) 
+    {
+    try
+        {
+            PreparedStatement x = cn.prepareStatement("insert into conferencia_participante(ID_Usuario, ID_Conferencia, Codigo_Participante) values (?,?,?)");
+            x.setInt(1, ID_u);
+            x.setInt(2, ID_c);
+            x.setInt(3, Codigo_p);
+            x.executeUpdate();            
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error al introducir datos");
         }
     }
 }

@@ -3,6 +3,10 @@ package Views;
 import Models.usuarioGeneral;
 import Administracion.usuarioGeneralAdmin;
 import BD.conexion;
+
+import BD.ConferenciasInsBD;
+import BD.conexion;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -52,7 +56,6 @@ public class Menu extends JFrame {
         // Ventana
         this.setTitle("Savala Conferenzes");
         this.setSize(900, 600);
-//        this.setDefaultCloseOperation(HIDE_ON_CLOSE); **********************************
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -68,13 +71,29 @@ public class Menu extends JFrame {
         
         // Buttons config
         btnConfig(btnInfo);
+        btnInfo.addActionListener((ActionEvent e) -> {
+//            new InfoUser(id).setVisible(true);
+        });
+        
         btnConfig(btnCreate);
         btnCreate.addActionListener((ActionEvent e) -> {
             new CrearConferencia(id).setVisible(true);
         });
-        btnConfig(btnManage);
+        
         btnConfig(btnToAssist);
+        btnToAssist.addActionListener((ActionEvent e) -> {
+           new ConferenciasIns(id).setVisible(true);
+        });
+
+        btnConfig(btnManage);
+        btnManage.addActionListener((ActionEvent e) -> {
+            // Llamada a administrar mis conferencias ****************************************
+        });
+        
         btnConfig(btnSignUp);
+        btnSignUp.addActionListener((ActionEvent e) -> {
+            // Llamada a Inscribirse a una conferencia ***************************************
+        });
         
         // Labels config
         labWelcome.setFont(fontTitle);
@@ -122,6 +141,7 @@ public class Menu extends JFrame {
                 .addComponent(btnInfo)
         );
     }
+    
     
     private void btnConfig(JButton btn) {
         btn.setOpaque(false);

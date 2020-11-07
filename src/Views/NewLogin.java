@@ -119,7 +119,7 @@ public class NewLogin extends JFrame {
                 usuarioGeneral UG = new usuarioGeneral();
                 UG = new usuarioGeneralBD().getUsuario(correo2, contraseña);
                 //agregar view de menu con el usuario
-                new ConferenciasInsBD().Usuario(UG);
+                new Menu(UG.getId()).setVisible(true);
             }
         });
        

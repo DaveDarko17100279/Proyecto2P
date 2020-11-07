@@ -44,7 +44,12 @@ public class VConferencia extends JFrame {
 
     Connection cn = new conexion().getConnection();
     
+    conferenciaBD usuario = new conferenciaBD();
+    conferencia[] con = new conferencia[usuario.getConferencias(6).length];
+    
     Object[] fila = new Object[6];
+    
+    private int Posicion;
     
     DefaultTableModel modelo = new DefaultTableModel();
     private JTable tabla = new JTable(modelo);
@@ -138,7 +143,8 @@ public class VConferencia extends JFrame {
         panelGeneral.add(lblBienvenido2);
         
         panelDetalles.setVisible(false);
-                panelEditar.setVisible(false);
+        panelEditar.setVisible(false);
+        panelBotones.setVisible(false);
     }
     
     private void table(){
@@ -147,21 +153,15 @@ public class VConferencia extends JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Cupo");
         
-
-            conferenciaBD usuario = new conferenciaBD();
-            conferencia[] con = new conferencia[usuario.getConferencias(6).length];
+            
             for(int i = 0; i<con.length;i++){
                 con[i] = usuario.getConferencias(6)[i];
             }
-            
-            System.out.println(con[1].getNombreConferencia());
-            System.out.println(con[1].getCupoTotal());
             
             for(int i = 0; i < con.length; i++){
                 fila[0] = con[i].getNombreConferencia();
                 fila[1] = String.valueOf(con[i].getPrecio());
                 fila[2] = String.valueOf(con[i].getCupoTotal());
-                fila[3] = "Hola";
                 modelo.addRow(fila); // Añade una fila al final
             }
 
@@ -182,16 +182,19 @@ public class VConferencia extends JFrame {
         // DETECTAR LA POSICIÓN SELECCIONADA
         tabla.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int fila = tabla.rowAtPoint(e.getPoint());
+                int Posicion = tabla.rowAtPoint(e.getPoint());
                 int columna = tabla.columnAtPoint(e.getPoint());
-                if ((fila > -1) && (columna > -1)) {
+                if ((Posicion > -1) && (columna > -1)) {
                     panelGeneral.setVisible(false);
                     panelEditar.setVisible(false);
                     System.out.println(String.valueOf(fila));
-                    lblName.setText((String) modelo.getValueAt(fila, 0));
-                    lblPrecio.setText((String) modelo.getValueAt(fila, 1));
-                    lblCupo.setText((String) modelo.getValueAt(fila, 2));
+                    lblName.setText((String) modelo.getValueAt(Posicion, 0));
+                    lblPrecio.setText((String) modelo.getValueAt(Posicion, 1));
+                    lblCupo.setText((String) modelo.getValueAt(Posicion, 2));
+                    lblHoraInicio.setText((String) con[Posicion].getHoraInicial().toString());
+                    lblHoraFinal.setText((String) con[Posicion].getHoraFinalizacion().toString());
                     panelDetalles.setVisible(true);
+                    panelBotones.setVisible(true);
                 }
             }
         });
@@ -207,8 +210,28 @@ public class VConferencia extends JFrame {
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                        PreparedStatement eliminarD = cn.prepareStatement("DELETE FROM detalles_conferencia WHERE ID_Conferencia = ?");
+                        eliminarD.setInt(1,con[Posicion].getIdConferencia());
+                        //guardo el resultado en res
+                        eliminarD.executeUpdate();
+                        
+                        PreparedStatement eliminarC = cn.prepareStatement("DELETE FROM conferencia WHERE ID_Conferencia = ?");
+                        eliminarC.setInt(1,con[Posicion].getIdConferencia());
+                        //guardo el resultado en res
+                        eliminarC.executeUpdate();
+                        
+                        modelo.removeRow(Posicion);
+                        JOptionPane.showMessageDialog(null, "Eliminado con Exito");
+                    } catch (SQLException ex) {
+                        //verifica que se haya realizado con exito
+                        JOptionPane.showMessageDialog(null, "Algo salio mal al guardar los datos");
+                    }
+                
                 panelDetalles.setVisible(false);
-                panelEditar.setVisible(true);
+                panelEditar.setVisible(false);
+                panelBotones.setVisible(false);
+                panelGeneral.setVisible(true);
             }
         });
     }

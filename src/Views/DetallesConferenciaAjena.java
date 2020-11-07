@@ -2,8 +2,11 @@
 package Views;
 
 import BD.conexion;
+import BD.conferenciaBD;
+import BD.usuarioGeneralBD;
 import Models.conferencia;
 import Models.conferencia_participante;
+import Models.usuarioGeneral;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -18,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -78,7 +82,8 @@ public class DetallesConferenciaAjena extends JFrame {
         // LLENAR LA TABLA
         Object[] fila = new Object[4]; //Columnas
         
-        ArrayList<conferencia> conferencias = consultarConferencia();
+        conferenciaBD confe = new conferenciaBD();
+        ArrayList<conferencia> conferencias = confe.consultarConferencia();
         
         for(conferencia conferencia:conferencias) {//Debera ser el largo del arreglo del modelo.
            //Mostrar de la BD 
@@ -106,8 +111,15 @@ public class DetallesConferenciaAjena extends JFrame {
         lblName.setForeground(new Color(0x00000));
         panel.add(lblName);
        
+       
+        JLabel lblPre = new JLabel(); //**************************************************************************** Precio_etiqueta
+        lblPre.setBounds(50,100,100,25);
+        lblPre.setFont(new Font("Javanese Text", Font.ITALIC, 20));
+        lblPre.setForeground(new Color(0x00000));
+        panel.add(lblPre);
+        
         JLabel lblPrecio = new JLabel(); //**************************************************************************** Precio
-        lblPrecio.setBounds(50,100,200,25);
+        lblPrecio.setBounds(125,100,200,25);
         lblPrecio.setFont(new Font("Javanese Text", Font.ITALIC, 20));
         lblPrecio.setForeground(new Color(0x00000));
         panel.add(lblPrecio);
@@ -182,7 +194,8 @@ public class DetallesConferenciaAjena extends JFrame {
                     lblSe.setText("");
                     lblName.setText((String) modelo.getValueAt(fila, 1)); //Nombre conferencia
                     lblFecha.setText("Fecha: " + (String) modelo.getValueAt(fila, 2)); // Fecha
-                    lblPrecio.setText("Precio: $" + (String) modelo.getValueAt(fila, 3)); // Precio
+                    lblPre.setText("Precio: $"); 
+                    lblPrecio.setText((String) modelo.getValueAt(fila, 3)); // Precio
                   
                    conferencias.forEach((n) -> {
                      int id = n.getIdConferencia();
@@ -211,98 +224,61 @@ public class DetallesConferenciaAjena extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //setVisible(true);
     }
-     
-     
-      public ArrayList<conferencia> consultarConferencia() 
-    {
-        ArrayList<conferencia> conferencias = new ArrayList<conferencia>();
-        ResultSet salida;
-        conferencia conf;
-        try 
-        {
-            PreparedStatement sql = con.prepareStatement("SELECT conferencia.ID_Conferencia, conferencia.ID_Usuario, conferencia.Nombre_Conferencia, conferencia.Cupo_Total, conferencia.Precio, detalles_conferencia.Fecha_Presentacion, detalles_conferencia.Hora_Inicial, detalles_conferencia.Hora_Finalizacion FROM conferencia INNER JOIN detalles_conferencia ON conferencia.ID_Conferencia = detalles_conferencia.ID_Conferencia WHERE conferencia.ID_Usuario != ?");            
-             sql.setInt(1,5);
-            salida = sql.executeQuery();
-        
-            while(salida.next())
-            {
-                conf = new conferencia();
-                conf.setIdUsuario(salida.getInt("conferencia.ID_Usuario"));
-                conf.setIdConferencia(salida.getInt("conferencia.ID_Conferencia"));
-                conf.setNombreConferencia(salida.getString("conferencia.Nombre_Conferencia"));
-                conf.setCupoTotal(salida.getInt("conferencia.Cupo_Total"));
-                conf.setPrecio(salida.getInt("conferencia.Precio"));
-                conf.setFechaPresentacion(salida.getDate("detalles_conferencia.Fecha_Presentacion"));
-                conf.setHoraInicial(salida.getTime("detalles_conferencia.Hora_Inicial"));
-                conf.setHoraFinalizacion(salida.getTime("detalles_conferencia.Hora_Finalizacion"));
-               // conf.setCosto(salida.getBoolean("conferencia.Costo"));
-               
-                 System.out.println(salida.next());
-                 conferencias.add(conf);
-                System.out.println("Agregado");
-            }
-        } 
-        catch (SQLException ex) 
-        {
-            
-        }
-        return conferencias;
-    }
-      
-      public ArrayList<conferencia_participante> consultarParticipantes(int ID_c) 
-    {
-        ArrayList<conferencia_participante> participantes = new ArrayList<>();
-        ResultSet salida;
-        conferencia_participante part;
-        try 
-        {
-            PreparedStatement sql = con.prepareStatement("SELECT * FROM conferencia_participante  WHERE ID_Usuario = ? AND ID_Conferencia = ?");            
-             sql.setInt(1,6);
-             sql.setInt(2,ID_c);
-            salida = sql.executeQuery();
-        
-            while(salida.next())
-            {
-                part = new conferencia_participante();
-                part.setID_Usuario(salida.getInt("ID_Usuario"));
-                part.setID_Conferencia(salida.getInt("ID_Conferencia"));
-                part.setCodigo_Participante(salida.getInt("Codigo_Participante"));
-               
-                participantes.add(part);
-            }
-        } 
-        catch (SQLException ex) 
-        {
-            
-        }
-        return participantes;
-    }
-      
-      
+           
       public void  inscribir_onclick(int ID_c, int Precio){
          
-          //Crear Modelo tabla conferencia_participante. LISTO READY
-          //Leer participantes.                          LISTO READY
-          //Comprobar si el usuario ya esta dentro.      LISTO READY
+         /*CONSULTA PARTICIPANTES DE CONFERENCIAS Y USUARIOS*/
+          //ArrayList<conferencia_participante> participantes = consultarParticipantes(ID_c, true);
+                conferenciaBD particiP = new conferenciaBD();
+                ArrayList<conferencia_participante> participantes = particiP.consultarParticipantes(ID_c, true);
           
-          //Leer usuarios.
-          //Verificar zenis sea mayor o igual a precio.
-          
-          //Generar código participante.
-          //verificar que no se repita en conferencia_participante.
-          
-          //Insertar en conferencia_participante.
-          
-          /*COMPROBAR QUE EL USUARIO NO ESTE YA INSCRITÓ*/
-          ArrayList<conferencia_participante> participantes = consultarParticipantes(ID_c);
+                usuarioGeneralBD user = new usuarioGeneralBD();
+                usuarioGeneral usuario = user.getUsuarioByID(5);
+            
+          /*GENERAR CODIGO DE PARTICIPANTE*/
+             boolean repetido = false;
+             int Codigo_p = 0;
+          do{
+                Random r = new Random(); 
+                int low = 1001;
+                int high = 9999;
+                Codigo_p = r.nextInt(high-low) + low;
+            
+                   //  ArrayList<conferencia_participante> Tparticipantes = consultarParticipantes(ID_c, false);
+                   //ArrayList<conferencia_participante> Tparticipantes = new  ArrayList<>();
+              
+                conferenciaBD particip = new conferenciaBD();
+                ArrayList<conferencia_participante> Tparticipantes = particip.consultarParticipantes(ID_c, false);
+                           
+                 for(conferencia_participante Tpar:Tparticipantes){
+                        if(Codigo_p == Tpar.getID_CP()){
+                             repetido = true;
+                             break;
+                        }else{
+                             repetido = false;
+                             }
+                        }
+            }while(repetido == true);
+           
+           /*COMPROBAR QUE EL USUARIO NO ESTE YA INSCRITÓ*/
           if(participantes.size() > 0){
                JOptionPane.showMessageDialog(null, "Usted ya esta inscrito en esta conferencia");
+           /*COMPROBAR QUE EL USUARIO TENGA DINERO SUFICIENTE*/
+          }else if(usuario.getZenis() < Precio){
+              JOptionPane.showMessageDialog(null, "Zenis insuficientes, sus Zenis: $" + usuario.getZenis() + ", Precio: " + Precio);
           }else{
-            
               
+              int Zenis = usuario.getZenis() - Precio;
+              
+              //actualizarZenis(Zenis, 5);
+              usuarioGeneralBD zen = new  usuarioGeneralBD() ;
+              zen.actualizarZenis(Zenis, 5);
+              
+              //InsertarParticipante(5, ID_c, Codigo_p);
+              conferenciaBD inPar = new conferenciaBD();
+              inPar.InsertarParticipante(5, ID_c, Codigo_p);
               
               JOptionPane.showMessageDialog(null, "Inscripción exitosa!!!");
           }
-          
       }
 }

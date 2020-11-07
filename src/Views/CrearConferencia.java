@@ -90,7 +90,6 @@ public class CrearConferencia extends JFrame {
         btnCreate.addActionListener((ActionEvent e) -> {
             if(validDatos()) {
                 clean();
-                return;
             }
         });
         

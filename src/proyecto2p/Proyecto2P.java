@@ -1,4 +1,4 @@
- 
+
 package proyecto2p; 
  
 import BD.*; 
@@ -27,3 +27,4 @@ public class Proyecto2P {
     } 
      
 } 
+
