@@ -210,30 +210,7 @@ public class CuentaE extends JFrame {
             if ("Medicinas Rosario".equals(Empre)) {empF = 11;}
             if ("Microsoft México".equals(Empre)) {empF = 12;}
             if ("Google México".equals(Empre)) {empF = 13;}
-            /*if( Nombre.getText().length() == 0 ||
-                paterno.getText().length() == 0 ||
-                materno.getText().length() == 0 ||
-                nacimiento.getText().length() == 0 ||
-                Co.getText().length() == 0 ||
-                Telefono.getText().length() == 0 ||
-                password.getText().length() == 0 ) {
-                JOptionPane.showMessageDialog(null, "Rellene todos los campos del señor@ " + Nombre.getText());
-            }
-            else {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-                try {
-                    java.util.Date utilDate = format.parse(nacimiento.getText());
-                    sqlDate = new java.sql.Date(utilDate.getTime());
-                    System.out.println(sqlDate);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-                usuarioEmpresarial UE = new usuarioEmpresarial(empF,Nombre.getText(), paterno.getText(), materno.getText(),sqlDate, Co.getText(), Long.parseLong(Telefono.getText(), 10), password.getText(),2);
-                new usuarioEmpresarialBD().crearUsuario(UE);
-            }
-            dispose();
-            new NewIndex().setVisible(true);*/
+            
         });
         
         Botones.add(empr);

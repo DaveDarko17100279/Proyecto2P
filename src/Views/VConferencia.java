@@ -1,9 +1,6 @@
 package Views;
 
-/**
- *
- * @author DaveDarko
- */
+
 
 
 import BD.conexion;

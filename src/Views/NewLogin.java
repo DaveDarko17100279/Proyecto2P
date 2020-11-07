@@ -130,10 +130,6 @@ public class NewLogin extends JFrame {
                 catch(java.lang.NullPointerException ex){
                     JOptionPane.showMessageDialog(null, "No estas registrado aun :(" );
                 }
-                
-                
-                
-                
             }
         });
        
