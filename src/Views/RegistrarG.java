@@ -215,7 +215,7 @@ public class RegistrarG extends JFrame {
                 new usuarioGeneralBD().crearUsuario(UG);
             }
             dispose();
-            new NewIndex().setVisible(true);
+            new Index().setVisible(true);
         });
         Fondo.add(Registrar);
 
