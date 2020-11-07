@@ -12,6 +12,7 @@ import BD.conferenciaBD;
 import Models.conferencia;
 import Models.usuarioGeneral;
 import java.awt.Color;
+import Formatos.JTextFieldHint;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -58,6 +59,7 @@ public class VConferencia extends JFrame {
     private conferencia confer;
     private usuarioGeneral user;
     
+    private int cantidad;
     private int Posicion;
     
     private DefaultTableModel modelo = new DefaultTableModel();
@@ -77,15 +79,15 @@ public class VConferencia extends JFrame {
     private JLabel lblFecha = new JLabel(); //**************************************************************************** Nombre
 
     private JTextField txtName = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtPrecio = new JTextField(); //**************************************************************************** Nombre
+    private JTextFieldHint txtPrecio = new JTextFieldHint(); //**************************************************************************** Nombre
     private JTextField txtCupo = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtHourStart = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtHourFinish = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtMinStart = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtMinFinish = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtYear = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtMonth = new JTextField(); //**************************************************************************** Nombre
-    private JTextField txtDay = new JTextField(); //**************************************************************************** Nombre
+    private JTextFieldHint txtHourStart = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtHourFinish = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtMinStart = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtMinFinish = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtYear = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtMonth = new JTextFieldHint(); //**************************************************************************** Nombre
+    private JTextFieldHint txtDay = new JTextFieldHint(); //**************************************************************************** Nombre
 
     private JButton btnEditar = new JButton("Editar Conferencia");
     private JButton btnEliminar = new JButton("Eliminar Conferencia");
@@ -171,21 +173,16 @@ public class VConferencia extends JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Cupo");
         
-            
-            for(int i = 0; i<con.length;i++){
+            cantidad = con.length;
+            for(int i = 0; i < cantidad; i++){
                 con[i] = usuario.getConferencias(id)[i];
             }
             
-            for(int i = 0; i < con.length; i++){
-                fila[0] = con[i].getNombreConferencia();
-                fila[1] = String.valueOf(con[i].getPrecio());
-                fila[2] = String.valueOf(con[i].getCupoTotal());
-                modelo.addRow(fila); // Añade una fila al final
-            }
+            
 
         
         // LLENAR LA TABLA
-        
+        llenarTabla();
         
         JScrollPane scrollPane = new JScrollPane(tabla); //************************************************ SCROLL PABEL TABLA
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -223,7 +220,7 @@ public class VConferencia extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 panelDetalles.setVisible(false);
                 panelEditar.setVisible(true);
-                validDatos();
+                
             }
         });
         
@@ -243,14 +240,7 @@ public class VConferencia extends JFrame {
                         
                         modelo.removeRow(Posicion);
                         
-                        usuario = null;
-                        usuario = new conferenciaBD();
-                        con = null;
-                        con = new conferencia[usuario.getConferencias(id).length];
-                        
-                        for (int i = 0; i < con.length; i++) {
-                            con[i] = usuario.getConferencias(id)[i];
-                        }
+                        actualizarTabla();
                         
                         JOptionPane.showMessageDialog(null, "Eliminado con Exito");
                     } catch (SQLException ex) {
@@ -262,6 +252,15 @@ public class VConferencia extends JFrame {
                 panelEditar.setVisible(false);
                 panelBotones.setVisible(false);
                 panelGeneral.setVisible(true);
+            }
+        });
+        
+        btnUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (validDatos()) {
+                    clean();
+                }
             }
         });
     }
@@ -327,53 +326,64 @@ public class VConferencia extends JFrame {
         // ACOMODO DE LABELS
         Mostrar(panelEditar);
         
+        // Hints config
+        txtYear.setHint("AAAA");
+        txtMonth.setHint("MM");
+        txtDay.setHint("DD");
+        txtHourStart.setHint("HH");
+        txtMinStart.setHint("MM");
+        txtHourFinish.setHint("HH");
+        txtMinFinish.setHint("MM");
+        
+        Font fontText = new Font("Segoe UI Light", 1, 16);
+        
         txtName.setBounds(110,20,180,25);
-        txtName.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtName.setFont(fontText);
         txtName.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtName);
         
         txtPrecio.setBounds(110,95,180,25);
-        txtPrecio.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtPrecio.setFont(fontText);
         txtPrecio.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtPrecio);
         
         txtCupo.setBounds(110,170,180,25);
-        txtCupo.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtCupo.setFont(fontText);
         txtCupo.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtCupo);
         
         txtHourStart.setBounds(110,245,85,25);
-        txtHourStart.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtHourStart.setFont(fontText);
         txtHourStart.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtHourStart);
         
         txtMinStart.setBounds(205,245,85,25);
-        txtMinStart.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtMinStart.setFont(fontText);
         txtMinStart.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtMinStart);
         
         txtMinFinish.setBounds(110,320,85,25);
-        txtMinFinish.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtMinFinish.setFont(fontText);
         txtMinFinish.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtMinFinish);
         
         txtHourFinish.setBounds(205,320,85,25);
-        txtHourFinish.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtHourFinish.setFont(fontText);
         txtHourFinish.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtHourFinish);
         
         txtYear.setBounds(110,395,55,25);
-        txtYear.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtYear.setFont(fontText);
         txtYear.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtYear);
         
         txtMonth.setBounds(173,395,55,25);
-        txtMonth.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtMonth.setFont(fontText);
         txtMonth.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtMonth);
         
         txtDay.setBounds(235,395,55,25);
-        txtDay.setFont(new Font("Javanese Text", Font.BOLD, 20));
+        txtDay.setFont(fontText);
         txtDay.setForeground(new Color(0x08A2C1));
         panelEditar.add(txtDay);
         
@@ -420,8 +430,6 @@ public class VConferencia extends JFrame {
         lblFechaM.setForeground(new Color(0x08A2C1));
         pPanel.add(lblFechaM);
     }
-    
-    
     
     private boolean validDatos() {
         String name;
@@ -523,15 +531,83 @@ public class VConferencia extends JFrame {
         timeFinish = Time.valueOf(strTimeFinish);
         
         System.out.println(date + " " + timeStart + " " + timeFinish);
+       
+        try {
+            PreparedStatement actualizarC = cn.prepareStatement(
+                    "UPDATE conferencia SET Nombre_Conferencia = ?,"
+                    + " Cupo_Total = ?, Precio = ? WHERE ID_Conferencia = ?");
+            actualizarC.setString(1, name);
+            actualizarC.setInt(2, cupo);
+            actualizarC.setInt(3, price);
+            actualizarC.setInt(4, con[Posicion].getIdConferencia());
+
+            actualizarC.executeUpdate();
+
+            PreparedStatement actualizarDC = cn.prepareStatement(
+                    "UPDATE detalles_conferencia SET Fecha_Presentacion = ?,"
+                    + "Hora_Inicial = ?, Hora_Finalizacion = ?  WHERE ID_Conferencia = ?");
+            actualizarDC.setDate(1, date);
+            actualizarDC.setTime(2, timeStart);
+            actualizarDC.setTime(3, timeFinish);
+            actualizarDC.setInt(4, con[Posicion].getIdConferencia());
+            actualizarDC.executeUpdate();
+            
+            // Eliminar Registros
+            while(cantidad != 0){
+                modelo.removeRow(cantidad - 1);
+                cantidad -= 1;
+            }
+            
+            actualizarTabla();
+            llenarTabla();
+            
+        } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Se quebró u.u");
+        }
         
-        confer = new conferencia(user.getId(), name, cupo, price, costo, date, timeStart, timeFinish);
+
+        
+                                                        
         
         if(conferenciaAdmin.agregar(confer))
             JOptionPane.showMessageDialog(null, "Conferencia agregada con exito");
         
         return true;
     }
+    
+    private void clean() {
+        txtName.setText("");
+        txtCupo.setText("");
+        txtPrecio.setText("");
+        txtYear.setText("");
+        txtMonth.setText("");
+        txtDay.setText("");
+        txtHourStart.setText("");
+        txtMinStart.setText("");
+        txtHourFinish.setText("");
+        txtMinFinish.setText("");
+    }
 
+    
+    private void actualizarTabla(){
+        usuario = null;
+        usuario = new conferenciaBD();
+        con = null;
+        con = new conferencia[usuario.getConferencias(id).length];
+        cantidad = con.length;
+        for (int i = 0; i < con.length; i++) {
+            con[i] = usuario.getConferencias(id)[i];
+        }
+    }
+    
+    private void llenarTabla(){
+        for(int i = 0; i < con.length; i++){
+                fila[0] = con[i].getNombreConferencia();
+                fila[1] = String.valueOf(con[i].getPrecio());
+                fila[2] = String.valueOf(con[i].getCupoTotal());
+                modelo.addRow(fila); // Añade una fila al final
+            }
+    }
 }
 
 
