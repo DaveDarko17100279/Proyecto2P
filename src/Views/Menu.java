@@ -82,6 +82,7 @@ public class Menu extends JFrame {
         
         btnConfig(btnToAssist);
         btnToAssist.addActionListener((ActionEvent e) -> {
+           dispose();
            new ConferenciasIns(id).setVisible(true);
         });
 
