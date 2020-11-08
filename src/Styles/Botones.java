@@ -7,10 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
-/**
- *
- * @author andy
- */
 public class Botones extends JButton {
    // Creamos la variable que representa la opacidad
 	float opacity = 0.5f;

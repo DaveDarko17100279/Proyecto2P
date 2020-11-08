@@ -11,10 +11,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JTextField;
 
-/**
- *
- * @author alex_
- */
 
 public class JTextFieldHint  extends JTextField implements FocusListener{
     private final Font fontLost = new Font("Segoe UI Light",Font.BOLD, 16);

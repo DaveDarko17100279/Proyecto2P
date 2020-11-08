@@ -12,10 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import javax.swing.JPanel;
-/**
- *
- * @author Pris
- */
+
  public class RoundedPanel extends JPanel
     {   
         private Color backgroundColor;
